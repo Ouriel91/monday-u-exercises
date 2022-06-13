@@ -2,11 +2,11 @@
   "name": "ouriel-todolist-cli",
   "version": "1.2.2",
   "description": "todolist cli",
-  "bin": "index.js",
+  "bin": "server.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
+    "start": "node server"
   },
   "author": "ouriel ohayon",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "commander": "^9.3.0",
     "express": "^4.18.1",
     "inquirer": "^8.2.4",
-    "node-fetch": "^3.2.4"
+    "node-fetch": "^3.2.4",
+    "nodemon": "^2.0.16"
   }
 }
