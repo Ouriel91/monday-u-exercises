@@ -1,4 +1,6 @@
-import fetch from 'node-fetch'
+// The Pokemon Client (using axios) goes here
+
+/* import fetch from 'node-fetch' */
 
 const API_BASE = 'https://pokeapi.co/api/v2/pokemon/'
 

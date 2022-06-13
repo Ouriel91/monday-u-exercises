@@ -1,5 +1,7 @@
-import TodoListModel from "./todolist-model.js"
-import PokemonClient from "./pokemon-client.js"
+// The ItemManager should go here. Remember that you have to export it.
+
+import TodoListModel from "../../todolist-model.js"
+import PokemonClient from "../clients/pokemon-client.js"
 
 const singleNumber = /^\d+$/
 const singleWord = /^[A-Za-z]+$/
