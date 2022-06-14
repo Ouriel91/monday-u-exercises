@@ -143,8 +143,18 @@ body {
     cursor: default;
 }
 
+.actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .delete{
     background: #e74c3c;  
+}
+
+.edit{
+    background: #5e3ce7;  
     border-radius: 0 5px 5px 0;
 }
 

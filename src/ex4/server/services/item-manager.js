@@ -84,8 +84,17 @@ export default class ItemManager {
 
     async handleAddSinglePokemonTodo(enterValue){
         const dataRetrieved = await this.pokemonClient.fetchSingle(enterValue)
-        const {value, isPokemon, imagePokemonPath} = dataRetrieved
-        this.addTodoParse(value, isPokemon, imagePokemonPath)
+        if(dataRetrieved){
+            const {value, isPokemon, imagePokemonPath} = dataRetrieved
+            this.addTodoParse(value, isPokemon, imagePokemonPath)
+        }
+        else {
+            const isPokemon = false
+            const imagePokemonPath = null
+            const value = `failed to fetch pokemon with this input: ${enterValue}`
+            this.addTodoParse(value, isPokemon, imagePokemonPath)
+        }
+        
         this.updateTodos()
     }
 
@@ -111,7 +120,7 @@ export default class ItemManager {
     }
 
     updateTodos(){
-        this.model.saveDataToLS()
+        this.model.saveDataToFile()
     }
 
     getDataInIndex(index){

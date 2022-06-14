@@ -9,7 +9,7 @@ export default class TodoListModel {
     loadDataFromFile(){
         const arr = url.fileURLToPath(import.meta.url).split("\\")
         const path = arr.slice(0, arr.length -1).join("\\")
-        //console.log(path)
+        
         try {
             const data = fs.readFileSync(`${path}/todo.json`, 'utf8');
             if(data === null){
@@ -33,7 +33,7 @@ export default class TodoListModel {
         this.todoList = copyArr
     }
 
-    saveDataToLS(){ 
+    saveDataToFile(){ 
         const arr = url.fileURLToPath(import.meta.url).split("\\")
         const path = arr.slice(0, arr.length -1).join("\\")
         fs.writeFile(`${path}/todo.json`, JSON.stringify(this.todoList), err => {
@@ -94,6 +94,7 @@ export default class TodoListModel {
     }
 
     getDataInIndex(index){
+        console.log(this.todoList[index])
         return {title: this.todoList[index].title, index}
     }
 

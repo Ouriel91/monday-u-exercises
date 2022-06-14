@@ -1,6 +1,7 @@
 // The Pokemon Client (using axios) goes here
 
 import fetch from 'node-fetch'
+import axios from 'axios'
 
 const API_BASE = 'https://pokeapi.co/api/v2/pokemon/'
 
@@ -8,15 +9,17 @@ export default class PokemonClient{
 
     fetchMulti(pokemonName){
         return new Promise((resolve, reject) => {
-            return fetch(`${API_BASE}${pokemonName}`)
+            return axios(`${API_BASE}${pokemonName}`)
                 .then(response => {
                     if(response.status === 200){
-                        resolve(response.json())
+                        resolve(response.data)
                     }
                     else if(response.status === 404){
+                        console.log("here 404")
                         resolve(pokemonName)
                     }
                     else{
+                        console.log("here else")
                         reject(response)
                     }
                 })
@@ -28,7 +31,7 @@ export default class PokemonClient{
 
     async fetchSingle(dataEntered){ 
         try{
-            const response = await fetch(`${API_BASE}${dataEntered}`)
+            const response = await axios(`${API_BASE}${dataEntered}`)
             if(response.status === 404 && isNaN(Number.parseInt(dataEntered))){
                 return dataEntered
             }
@@ -36,7 +39,7 @@ export default class PokemonClient{
                 return `pokemon id ${dataEntered} not found` 
             }
 
-            const res = await response.json()
+            const res = await response.data
             const types = this.getTypes(res)
 
             return this.returnPokemonData(res, types)

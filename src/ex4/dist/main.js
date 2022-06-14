@@ -54,7 +54,7 @@ export default class Main{
         this.createListItems().then((listItems) => {
             todoListElement.innerHTML = listItems
             this.showMatchUiByTodosNumber() 
-            this.createItemsDeleteFuctionality()
+            this.createItemsFuctionality()
         })
     }
 
@@ -64,36 +64,57 @@ export default class Main{
         this.todoList = await this.itemClient.getTodoList()
 
         this.todoList.forEach((todo) => { 
-            listItems += `<li class="todo-item">${todo.title}
-                <div>
-                    <span class="action-btn delete">
-                        <i class="fas fa-trash"></i>
-                    </span>
+            listItems += 
+            `<li class="todo-item">
+                <div class="todo-title">${todo.title}</div>
+                <div class="actions">
+                    <div>
+                        <span class="action-btn delete">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="action-btn edit">
+                            <i class="fas fa-edit"></i>
+                        </span>
+                    </div>
                 </div>
-                </li>
+            </li>
             `
         })
 
         return listItems
     }
 
-    createItemsDeleteFuctionality(){
+    async createItemsFuctionality(){
         const deleteItems = document.querySelectorAll(".delete")
+        const editItems = document.querySelectorAll(".edit")
+        const todos = document.querySelectorAll(".todo-title")
 
         deleteItems.forEach((item, index) => {
             item.addEventListener("click", () => this.deleteTodo(index))
+        })
+
+        editItems.forEach((item, index) => {
+            item.addEventListener("click", async() => {
+                const data = todos[index].textContent
+                let value = prompt("change this todo to regular todo", data)
+                if(value === null){
+                    return
+                }
+                await this.editDataInIndex(value, index)
+            })
         })
     }
 
 
     async deleteTodo(index){
         const removedTodo = await this.itemClient.deleteTodo(index)
-        //this.todoList.splice(index, 1)
         this.showTodos()
         alert(`removed new todo ${removedTodo}`) 
     }
 
-    async addTodo(todoInput){
+    async addTodo(){
         const todoInputEl = document.getElementById("todo-input")
         const addTodoButton = document.getElementById("add-todo-button")
 
@@ -121,12 +142,16 @@ export default class Main{
     }
 
     async editDataInIndex(value, index){
-        return await this.itemClient.editTodoIndex(value, index)
+        const editedData = await this.itemClient.editTodoIndex(value, index)
+        console.log(editedData)
+        alert(`data edited to ${editedData}`)
+        this.showTodos()
     }
 
-    clearAllTodos(){
-        //this.itemManager.clearAllTodos()
+    async clearAllTodos(){
+        /* await this.itemClient.clearAllTodoList()
         alert("all todos cleared")
+        this.showTodos() */
     }
 
     orderDataAlphabetically() {
