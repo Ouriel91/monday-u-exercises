@@ -15,14 +15,14 @@ export default class ItemManager {
         this.main = main;
     }
 
-    addTodo(enterValue){
+    async addTodo(enterValue){
         const trimValue = ItemManager.trim(enterValue)
         if(trimValue === "") return
 
-        this.handleInputToAdd(trimValue)
+        await this.handleInputToAdd(trimValue)
     }
 
-    handleInputToAdd(trimValue){
+    async handleInputToAdd(trimValue){
         const partOfNumbersSeprateWithComma = 
             trimValue.substring(0,1).match(multiNumbersSeparatedWithComma)
 
@@ -34,7 +34,7 @@ export default class ItemManager {
                 singleNumberPattern !== null || 
                     multiNumberPattern !== null || 
                         partOfNumbersSeprateWithComma !== null) {
-            this.handleAddSingleOrMultiPokemonsTodo(trimValue)
+            await this.handleAddSingleOrMultiPokemonsTodo(trimValue)
         }
         else{ //noraml todo
             const isPokemon = false
@@ -44,17 +44,17 @@ export default class ItemManager {
         }
     }
 
-    handleAddSingleOrMultiPokemonsTodo(enterValue){
+    async handleAddSingleOrMultiPokemonsTodo(enterValue){
 
         if(enterValue.includes(",")){
-            this.handleAddMultiPokemonsTodo(enterValue)
+            await this.handleAddMultiPokemonsTodo(enterValue)
         }
         else {
-            this.handleAddSinglePokemonTodo(enterValue)
+            await this.handleAddSinglePokemonTodo(enterValue)
         }
     }
 
-    handleAddMultiPokemonsTodo(enterValue){
+    async handleAddMultiPokemonsTodo(enterValue){
 
         const split = enterValue.split(",")
         const pokemonArr = []
@@ -63,7 +63,7 @@ export default class ItemManager {
             pokemonArr.push(this.pokemonClient.fetchMulti(ItemManager.trim(split[i])))
         }
 
-        Promise.all(pokemonArr)
+        return Promise.all(pokemonArr)
             .then(response => {
                 response.forEach(res => {
                     const types = this.pokemonClient.getTypes(res)

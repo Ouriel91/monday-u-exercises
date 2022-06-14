@@ -4,11 +4,9 @@ export default class Main{
     constructor(){
         this.itemClient = new ItemClient()
         this.todoList = []
-        //this.itemManager = new ItemManager(this);
     }
 
     showTodos() {
-        this.showMatchUiByTodosNumber() 
         this.createTodoListItems() 
     }
 
@@ -46,7 +44,6 @@ export default class Main{
         const todoInput = document.getElementById("todo-input")
 
         this.createItemsByCurrentData()
-        this.createItemsDeleteFuctionality()
         
         todoInput.value = "" //clear input
     }
@@ -54,9 +51,11 @@ export default class Main{
     createItemsByCurrentData(){
         const todoListElement = document.getElementById("todo-list")
 
-        const listItems = this.createListItems()
-    
-        todoListElement.innerHTML = listItems
+        this.createListItems().then((listItems) => {
+            todoListElement.innerHTML = listItems
+            this.showMatchUiByTodosNumber() 
+            this.createItemsDeleteFuctionality()
+        })
     }
 
     async createListItems(){
@@ -65,7 +64,7 @@ export default class Main{
         this.todoList = await this.itemClient.getTodoList()
 
         this.todoList.forEach((todo) => { 
-            listItems += `<li class="todo-item">${todo}
+            listItems += `<li class="todo-item">${todo.title}
                 <div>
                     <span class="action-btn delete">
                         <i class="fas fa-trash"></i>
@@ -87,13 +86,14 @@ export default class Main{
     }
 
 
-    deleteTodo(index){
-        const removedTodo = this.itemManager.deleteTodo(index)
+    async deleteTodo(index){
+        const removedTodo = await this.itemClient.deleteTodo(index)
+        //this.todoList.splice(index, 1)
+        this.showTodos()
         alert(`removed new todo ${removedTodo}`) 
-        //return removedTodo
     }
 
-    addTodo(todoInput){
+    async addTodo(todoInput){
         const todoInputEl = document.getElementById("todo-input")
         const addTodoButton = document.getElementById("add-todo-button")
 
@@ -106,58 +106,60 @@ export default class Main{
         else{
             alert(`added new todo ${enterValue}`)
         }
-        this.itemManager.addTodo(todoInput)
+        
+        await this.itemClient.addTodo(enterValue)
+        this.showTodos()
         addTodoButton.classList.remove("active")
     }
 
-    getDataInIndex(index){ 
-        return this.itemManager.getDataInIndex(index)
+    getDataInIndex(index){     
+        return this.itemClient.getSingleTodo(index)
     }
 
     getDoneInIndex(index){
-        return this.itemManager.getDoneInIndex(index)
+        //return this.itemManager.getDoneInIndex(index)
     }
 
-    editDataInIndex(value, index){
-        return this.itemManager.editDataInIndex(value, index)
+    async editDataInIndex(value, index){
+        return await this.itemClient.editTodoIndex(value, index)
     }
 
     clearAllTodos(){
-        this.itemManager.clearAllTodos()
+        //this.itemManager.clearAllTodos()
         alert("all todos cleared")
     }
 
     orderDataAlphabetically() {
-        this.itemManager.orderDataAlphabetically()
+        //this.itemManager.orderDataAlphabetically()
     }
 
     orderDataAlphabeticallyReverse() {
-        this.itemManager.orderDataAlphabeticallyReverse()
+        //this.itemManager.orderDataAlphabeticallyReverse()
     }
 
     orderUnDoneToDone() {
-        this.itemManager.orderUnDoneToDone()
+        //this.itemManager.orderUnDoneToDone()
     }
 
     orderDoneToUnDone(){
-        this.itemManager.orderDoneToUnDone()
+        //this.itemManager.orderDoneToUnDone()
     }
 
     changeDoneStatus(index, status) {
         if(status){
-            return this.itemManager.checkTodo(index)
+            //return this.itemManager.checkTodo(index)
         }
         else{
-            return this.itemManager.uncheckTodo(index)
+            //return this.itemManager.uncheckTodo(index)
         }
     }
 
     getDoneTodos(){
-        return this.itemManager.getDoneTodos()
+        //return this.itemManager.getDoneTodos()
     }
 
     getUnDoneTodos(){
-        return this.itemManager.getUnDoneTodos()
+        //return this.itemManager.getUnDoneTodos()
     }
 }
 

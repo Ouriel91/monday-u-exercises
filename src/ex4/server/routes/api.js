@@ -11,12 +11,17 @@ todoRouter.get('/', (req, res) => {
     res.status(200).json(data);
 })
 
-todoRouter.post("/", (req, res) => {
+todoRouter.post("/", async(req, res) => {
     const {todo} = req.body
-    console.log(todo)
+    
+    if(!todo){
+        res.status(400).send()
+        return
+    }
+    
     try{
-        itemManager.addTodo(todo)
-        res.status(201).send();
+        await itemManager.addTodo(todo)
+        res.status(201).json(todo);
     }
     catch(error){
         console.log(error)
@@ -30,7 +35,7 @@ todoRouter.delete("/:id", (req, res) => {
        return res.status(404).send()
     }
 
-    res.status(200).send()
+    res.status(200).json(deletedTodo)
 })
 
 todoRouter.put("/:id", (req, res) => {
@@ -39,6 +44,17 @@ todoRouter.put("/:id", (req, res) => {
     const editTodo = itemManager.editDataInIndex(todo, id)
 
     if(editTodo === null){
+        return res.status(404).send()
+     }
+ 
+     res.status(200).send()
+})
+
+todoRouter.get('/:id', (req, res) => {
+    const id = Number.parseInt(req.params.id)
+    const dataInIndex = itemManager.getDataInIndex(id)
+
+    if(dataInIndex === null){
         return res.status(404).send()
      }
  
