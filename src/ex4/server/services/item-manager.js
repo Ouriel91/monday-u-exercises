@@ -1,6 +1,6 @@
 // The ItemManager should go here. Remember that you have to export it.
 
-import TodoListModel from "../../todolist-model.js"
+import TodoListModel from "../model/todolist-model.js"
 import PokemonClient from "../clients/pokemon-client.js"
 
 const singleNumber = /^\d+$/
@@ -17,6 +17,7 @@ export default class ItemManager {
 
     addTodo(enterValue){
         const trimValue = ItemManager.trim(enterValue)
+        if(trimValue === "") return
 
         this.handleInputToAdd(trimValue)
     }

@@ -1,12 +1,17 @@
 import fs from 'fs';
+import * as url from 'url';
+
 export default class TodoListModel {
     constructor() {
         this.todoList = []
     }
 
     loadDataFromFile(){
+        const arr = url.fileURLToPath(import.meta.url).split("\\")
+        const path = arr.slice(0, arr.length -1).join("\\")
+        //console.log(path)
         try {
-            const data = fs.readFileSync('./todo.json', 'utf8');
+            const data = fs.readFileSync(`${path}/todo.json`, 'utf8');
             if(data === null){
                 this.todoList = []
             }
@@ -29,7 +34,9 @@ export default class TodoListModel {
     }
 
     saveDataToLS(){ 
-        fs.writeFile("./todo.json", JSON.stringify(this.todoList), err => {
+        const arr = url.fileURLToPath(import.meta.url).split("\\")
+        const path = arr.slice(0, arr.length -1).join("\\")
+        fs.writeFile(`${path}/todo.json`, JSON.stringify(this.todoList), err => {
             if(err) {
                 console.log(err)
             }

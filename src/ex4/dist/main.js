@@ -1,8 +1,10 @@
-import ItemManager from "../server/services/item-manager.js"
+import ItemClient from './clients/item-client.js'
 
 export default class Main{
     constructor(){
-        this.itemManager = new ItemManager(this);
+        this.itemClient = new ItemClient()
+        this.todoList = []
+        //this.itemManager = new ItemManager(this);
     }
 
     showTodos() {
@@ -12,9 +14,9 @@ export default class Main{
 
     showMatchUiByTodosNumber() {
         const sumTodos = document.getElementById("sum-todos")
-        sumTodos.textContent = this.itemManager.todoListSize()
+        sumTodos.textContent = this.todoList.length
         
-        if(this.itemManager.todoListSize() > 0){
+        if(this.todoList.length > 0){
             this.updateUIWithNonEmptyInput()
         }
         else{
@@ -57,10 +59,12 @@ export default class Main{
         todoListElement.innerHTML = listItems
     }
 
-    createListItems(){
+    async createListItems(){
         let listItems = ""
 
-        this.itemManager.getTodoList().forEach((todo) => { 
+        this.todoList = await this.itemClient.getTodoList()
+
+        this.todoList.forEach((todo) => { 
             listItems += `<li class="todo-item">${todo}
                 <div>
                     <span class="action-btn delete">
