@@ -65,9 +65,14 @@ export default class Main{
         this.todoList = await this.itemClient.getTodoList()
 
         this.todoList.forEach((todo) => { 
+            let image = ""
+            if(todo.isPokemon){
+                image = `<img class="image" src="${todo.imagePokemonPath}" />`
+            }
             listItems += 
             `<li class="todo-item">
                 <div class="todo-title">${todo.title}</div>
+                ${image}
                 <div class="actions">
                     <div>
                         <span class="action-btn delete">
