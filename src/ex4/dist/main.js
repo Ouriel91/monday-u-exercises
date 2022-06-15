@@ -61,6 +61,7 @@ export default class Main{
     async createListItems(){
         let listItems = ""
 
+        this.loaderActiveDeActive(true)
         this.todoList = await this.itemClient.getTodoList()
 
         this.todoList.forEach((todo) => { 
@@ -82,6 +83,8 @@ export default class Main{
             </li>
             `
         })
+
+        this.loaderActiveDeActive(false)
 
         return listItems
     }
@@ -109,7 +112,9 @@ export default class Main{
 
 
     async deleteTodo(index){
+        this.loaderActiveDeActive(true)
         const removedTodo = await this.itemClient.deleteTodo(index)
+        this.loaderActiveDeActive(false)
         this.showTodos()
         alert(`removed new todo ${removedTodo}`) 
     }
@@ -128,7 +133,9 @@ export default class Main{
             alert(`added new todo ${enterValue}`)
         }
         
+        this.loaderActiveDeActive(true)
         await this.itemClient.addTodo(enterValue)
+        this.loaderActiveDeActive(false)
         this.showTodos()
         addTodoButton.classList.remove("active")
     }
@@ -142,8 +149,10 @@ export default class Main{
     }
 
     async editDataInIndex(value, index){
+        loaderActiveDeActive(true)
         const editedData = await this.itemClient.editTodoIndex(value, index)
         console.log(editedData)
+        loaderActiveDeActive(false)
         alert(`data edited to ${editedData}`)
         this.showTodos()
     }
@@ -185,6 +194,16 @@ export default class Main{
 
     getUnDoneTodos(){
         //return this.itemManager.getUnDoneTodos()
+    }
+
+    loaderActiveDeActive(value){
+        const loader = document.getElementById("loader")
+        if(value){
+            loader.style.display = "block"
+        }
+        else {
+            loader.style.display = "none"
+        }
     }
 }
 
