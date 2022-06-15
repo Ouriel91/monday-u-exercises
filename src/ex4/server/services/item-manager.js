@@ -99,16 +99,17 @@ export default class ItemManager {
     }
 
     addTodoParse(value, isPokemon, imagePokemonPath){
-        this.model.addData({title: value, done: false, isPokemon, imagePokemonPath})
+        const id = new Date().getTime()
+        this.model.addData({title: value, done: false, isPokemon, imagePokemonPath, id})
     }
 
     static trim(value) {
         return value.replace(/^\s+|\s+$/g,"");
     }
 
-    deleteTodo(index) {
-
-        if(index < 0 || index >= this.model.todoList.length){
+    deleteTodo(id) {
+        const index = this.model.todoList.findIndex(item => item.id === id);
+        if(index === -1){
             return null;
         }
     
@@ -164,8 +165,9 @@ export default class ItemManager {
         return todo
     }
 
-    editDataInIndex(value, index){
-        if(index < 0 || index >= this.model.todoList.length){
+    editDataInIndex(value, id){
+        const index = this.model.todoList.findIndex(item => item.id === id)
+        if(index === -1){
             return null;
         }
         

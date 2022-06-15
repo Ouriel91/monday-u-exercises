@@ -14,17 +14,18 @@ export default class PokemonClient{
                     if(response.status === 200){
                         resolve(response.data)
                     }
-                    else if(response.status === 404){
-                        console.log("here 404")
-                        resolve(pokemonName)
-                    }
                     else{
                         console.log("here else")
                         reject(response)
                     }
                 })
                 .catch(error => {
-                    reject(error)
+                    if(error.response.status === 404){
+                        resolve(pokemonName)
+                    }
+                    else{
+                        reject(error)
+                    }
                 })
         })
     }

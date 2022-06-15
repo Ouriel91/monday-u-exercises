@@ -81,12 +81,12 @@ export default class Main{
                 ${image}
                 <div class="actions">
                     <div>
-                        <span class="action-btn delete">
+                        <span class="action-btn delete" id=${todo.id}>
                             <i class="fas fa-trash"></i>
                         </span>
                     </div>
                     <div>
-                        <span class="action-btn edit">
+                        <span class="action-btn edit" data-title="${todo.title}" id=${todo.id}>
                             <i class="fas fa-edit"></i>
                         </span>
                     </div>
@@ -107,17 +107,17 @@ export default class Main{
         const checkTodos = document.querySelectorAll(".check-todo")
 
         deleteItems.forEach((item, index) => {
-            item.addEventListener("click", () => this.deleteTodo(index))
+            item.addEventListener("click", () => this.deleteTodo(item.id))
         })
 
         editItems.forEach((item, index) => {
-            item.addEventListener("click", async() => {
-                const data = todos[index].textContent
+            item.addEventListener("click", async(e) => {
+                const data = item.getAttribute("data-title")
                 let value = prompt("change this todo to regular todo", data)
                 if(value === null){
                     return
                 }
-                await this.editDataInIndex(value, index)
+                await this.editDataInIndex(value, item.id)
             })
         })
     }
@@ -161,22 +161,23 @@ export default class Main{
     }
 
     async editDataInIndex(value, index){
-        loaderActiveDeActive(true)
+        this.loaderActiveDeActive(true)
         const editedData = await this.itemClient.editTodoIndex(value, index)
-        console.log(editedData)
-        loaderActiveDeActive(false)
-        alert(`data edited to ${editedData}`)
+        this.loaderActiveDeActive(false)
+        alert(`data edited to ${editedData.title}`)
         this.showTodos()
     }
 
     async clearAllTodos(){
-        /* await this.itemClient.clearAllTodoList()
+        const allItemsDeleteRoute = -1
+        await this.itemClient.deleteTodo(allItemsDeleteRoute)
         alert("all todos cleared")
-        this.showTodos() */
+        this.showTodos()
     }
 
     orderDataAlphabetically() {
-        //this.itemManager.orderDataAlphabetically()
+        /* this.itemClient.getTodoList("sort=atoz")
+        this.showTodos() */
     }
 
     orderDataAlphabeticallyReverse() {
@@ -260,10 +261,10 @@ function onDOMReady() {
     
     orderSelect.addEventListener('change', (e) => {
         if(e.target.value === "A-Z") {
-            main.filterDataAToZ()
+            main.orderDataAlphabetically()
         }
         else{
-            main.filterDataZToA()
+            //main.filterDataZToA()
         }
     })
 }

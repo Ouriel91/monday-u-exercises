@@ -48,15 +48,7 @@ export default class ItemClient {
         })
         const data = await response.json()
 
-        return data.todo
-    }
-
-    async clearAllTodoList(){
-       /*  console.log("item client clear")
-        const response = await fetch(`${SERVER_URL}clear`)
-        console.log("resp", response)
-        const data = await response.json() */
-        
+        return data
     }
 }
 

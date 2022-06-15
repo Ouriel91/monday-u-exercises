@@ -6,6 +6,18 @@ const todoRouter = express.Router();
 const itemManager = new ItemManager();
 
 todoRouter.get('/', (req, res) => {
+    // http://localhost:8080/todo?sort=status
+    // http://localhost:8080/todo?sort=title
+    const {sort} = req.query;
+    if(sort){
+        if(sort === 'atoz'){
+            console.log("atoz")
+            itemManager.orderDataAlphabetically()
+            return
+        }else if (sort === 'title'){
+
+        }
+    }
     const data = itemManager.getTodoList()
     res.status(200).json(data);
 })
@@ -33,6 +45,13 @@ todoRouter.post("/", async(req, res) => {
 
 todoRouter.delete("/:id", (req, res) => {
     const id = Number.parseInt(req.params.id)
+
+    if(id === -1){ //some recogintion for delete all todos
+        itemManager.clearAllTodos()
+        res.status(200).json({});
+        return
+    }
+
     const deletedTodo = itemManager.deleteTodo(id)
     if(deletedTodo === null){
         let error = new Error()
@@ -56,7 +75,7 @@ todoRouter.put("/:id", (req, res) => {
         throw error
      }
  
-     res.status(200).send()
+     res.status(200).json(editTodo)
 })
 
 todoRouter.get('/:id', (req, res) => {
@@ -71,14 +90,6 @@ todoRouter.get('/:id', (req, res) => {
     }
  
     res.status(200).send()
-})
-
-todoRouter.get('/clear', (req, res) => {
-    console.log("clear routes")
-    /* 
-    itemManager.clearAllTodos()
-    const data = itemManager.getTodoList()
-    res.status(200).json(data); */
 })
 
 export default todoRouter;
