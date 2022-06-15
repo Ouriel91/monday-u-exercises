@@ -69,8 +69,14 @@ export default class Main{
             if(todo.isPokemon){
                 image = `<img class="image" src="${todo.imagePokemonPath}" />`
             }
+
+            let checked = `<input id="check-todo" type="checkbox">`
+            if(todo.done){
+                checked = `<input id="check-todo" type="checkbox" checked>`
+            }
             listItems += 
             `<li class="todo-item">
+                ${checked}
                 <div class="todo-title">${todo.title}</div>
                 ${image}
                 <div class="actions">
@@ -98,6 +104,7 @@ export default class Main{
         const deleteItems = document.querySelectorAll(".delete")
         const editItems = document.querySelectorAll(".edit")
         const todos = document.querySelectorAll(".todo-title")
+        const checkTodos = document.querySelectorAll(".check-todo")
 
         deleteItems.forEach((item, index) => {
             item.addEventListener("click", () => this.deleteTodo(index))
