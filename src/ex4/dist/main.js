@@ -104,14 +104,22 @@ export default class Main{
     }
 
     async createItemsFuctionality(){
+
+        this.createDeleteEvents()
+        this.createEditEvents()
+        this.createCheckEvents()      
+    }
+
+    createDeleteEvents(){
         const deleteItems = document.querySelectorAll(".delete")
-        const editItems = document.querySelectorAll(".edit")
-        const todos = document.querySelectorAll(".todo-title")
-        const checkTodos = document.querySelectorAll(".check-todo")
 
         deleteItems.forEach((item) => {
             item.addEventListener("click", () => this.deleteTodo(item.id))
         })
+    }
+
+    createEditEvents(){
+        const editItems = document.querySelectorAll(".edit")
 
         editItems.forEach((item) => {
             item.addEventListener("click", async() => {
@@ -123,6 +131,10 @@ export default class Main{
                 await this.editDataInIndex(value, item.id)
             })
         })
+    }
+
+    createCheckEvents(){
+        const checkTodos = document.querySelectorAll(".check-todo")
 
         checkTodos.forEach((item) => {
             item.addEventListener("change", () => {
@@ -131,7 +143,6 @@ export default class Main{
             })
         })
     }
-
 
     async deleteTodo(index){
         this.loaderActiveDeActive(true)
@@ -163,14 +174,6 @@ export default class Main{
         addTodoButton.classList.remove("active")
     }
 
-    getDataInIndex(index){     
-        return this.itemClient.getSingleTodo(index)
-    }
-
-    getDoneInIndex(index){
-        //return this.itemManager.getDoneInIndex(index)
-    }
-
     async editDataInIndex(value, index){
         this.loaderActiveDeActive(true)
         const editedData = await this.itemClient.editTodoIndex(value, index)
@@ -180,7 +183,7 @@ export default class Main{
     }
 
     async clearAllTodos(){
-        const allItemsDeleteRoute = -1
+        const allItemsDeleteRoute = "delete-all" //some recogintion for delete all todos
         await this.itemClient.deleteTodo(allItemsDeleteRoute)
         alert("all todos cleared")
         this.showTodos()

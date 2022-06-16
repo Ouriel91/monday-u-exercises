@@ -1,5 +1,7 @@
 import fs from 'fs';
 import * as url from 'url';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path'
 
 export default class TodoListModel {
     constructor() {
@@ -7,11 +9,11 @@ export default class TodoListModel {
     }
 
     loadDataFromFile(){
-        const arr = url.fileURLToPath(import.meta.url).split("\\")
-        const path = arr.slice(0, arr.length -1).join("\\")
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = dirname(__filename);
         
         try {
-            const data = fs.readFileSync(`${path}/todo.json`, 'utf8');
+            const data = fs.readFileSync(`${__dirname}/todo.json`, 'utf8');
             if(data === null){
                 this.todoList = []
             }
@@ -34,9 +36,9 @@ export default class TodoListModel {
     }
 
     saveDataToFile(){ 
-        const arr = url.fileURLToPath(import.meta.url).split("\\")
-        const path = arr.slice(0, arr.length -1).join("\\")
-        fs.writeFile(`${path}/todo.json`, JSON.stringify(this.todoList), err => {
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = dirname(__filename);
+        fs.writeFile(`${__dirname}/todo.json`, JSON.stringify(this.todoList), err => {
             if(err) {
                 console.log(err)
             }
@@ -91,15 +93,6 @@ export default class TodoListModel {
         const filteredArr = copyArr.filter(todo => todo.done === value)
 
         return filteredArr
-    }
-
-    getDataInIndex(index){
-        console.log(this.todoList[index])
-        return {title: this.todoList[index].title, index}
-    }
-
-    getDoneInIndex(index){
-        return this.todoList[index].done
     }
 
     editDataInIndex(value, index){

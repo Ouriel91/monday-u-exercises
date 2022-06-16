@@ -22,7 +22,9 @@ export default class ItemClient {
 
     async deleteTodo(index){
         const response = await fetch(`${SERVER_URL}/${index}`, 
-        {method: 'DELETE'})
+        {
+            method: 'DELETE'
+        })
         const data = await response.json()
         return data.title
     }

@@ -11,41 +11,35 @@ todoRouter.get('/', (req, res) => {
     if(sort){
         if(sort === 'atoz'){
             itemManager.orderDataAlphabetically()
-            res.status(200).json({});
-            return
         }else if (sort === 'ztoa'){
             itemManager.orderDataAlphabeticallyReverse()
-            res.status(200).json({});
-            return
         }
         else if (sort === 'dtou'){
             itemManager.orderDoneToUnDone()
-            res.status(200).json({});
-            return
         }
         else if (sort === 'utod'){
             itemManager.orderUnDoneToDone()
-            res.status(200).json({});
-            return
         }
-        else { //for all list case
-            res.status(200).json({});
-            return
-        }
-
+        
+        res.status(200).json({});
+        return
     }
-    if(filter){
-        const data = itemManager.getTodoList()
 
+    if(filter){
+
+        const data = itemManager.getTodoList()
         let filteteredData = [];
+
         if(filter === 'checked'){
             filteteredData = data.filter(t => t.done === true);
         }else{
             filteteredData = data.filter(t => t.done === false);
         }
+
         res.status(200).json(filteteredData);
         return
     }
+    
     const data = itemManager.getTodoList()
     res.status(200).json(data);
 })
@@ -74,7 +68,7 @@ todoRouter.post("/", async(req, res) => {
 todoRouter.delete("/:id", (req, res) => {
     const id = req.params.id
 
-    if(id === -1){ //some recogintion for delete all todos
+    if(id === "delete-all"){ //some recogintion for delete all todos
         itemManager.clearAllTodos()
         res.status(200).json({});
         return
@@ -122,18 +116,5 @@ todoRouter.put("/:id", (req, res) => {
      res.status(200).json(editTodo)
 })
 
-todoRouter.get('/:id', (req, res) => {
-    const id = req.params.id
-    const dataInIndex = itemManager.getDataInIndex(id)
-
-    if(dataInIndex === null){
-        let error = new Error()
-        error.statusCode = 404
-        error.message = "Invalid index to get single item"
-        throw error
-    }
- 
-    res.status(200).send()
-})
 
 export default todoRouter;

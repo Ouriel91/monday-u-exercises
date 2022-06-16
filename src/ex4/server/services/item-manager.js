@@ -71,11 +71,7 @@ export default class ItemManager {
             this.updateTodos()
         }).catch(error => {
             console.log(error)
-            const isPokemon = false
-            const imagePokemonPath = null
-            const value = `failed to fetch pokemon with this input: ${enterValue}`
-            this.addTodoParse(value, isPokemon, imagePokemonPath)
-            this.updateTodos()
+            this.addFailToLoadPokemonsTodo()
         })
     }
 
@@ -86,20 +82,24 @@ export default class ItemManager {
         this.addTodoParse(value, isPokemon, imagePokemonPath)
     }
 
+    addFailToLoadPokemonsTodo(enterValue){
+        const isPokemon = false
+        const imagePokemonPath = null
+        const value = `failed to fetch pokemon with this input: ${enterValue}`
+        this.addTodoParse(value, isPokemon, imagePokemonPath)
+        this.updateTodos()
+    }
+
     async handleAddSinglePokemonTodo(enterValue){
         const dataRetrieved = await this.pokemonClient.fetchSingle(enterValue)
         if(dataRetrieved){
             const {value, isPokemon, imagePokemonPath} = dataRetrieved
             this.addTodoParse(value, isPokemon, imagePokemonPath)
+            this.updateTodos()
         }
         else {
-            const isPokemon = false
-            const imagePokemonPath = null
-            const value = `failed to fetch pokemon with this input: ${enterValue}`
-            this.addTodoParse(value, isPokemon, imagePokemonPath)
-        }
-        
-        this.updateTodos()
+            this.addFailToLoadPokemonsTodo(enterValue)
+        }   
     }
 
     addTodoParse(value, isPokemon, imagePokemonPath){
@@ -129,22 +129,6 @@ export default class ItemManager {
 
     updateTodos(){
         this.model.saveDataToFile()
-    }
-
-    getDataInIndex(index){
-        if(index < 0 || index >= this.model.todoList.length){
-            return null
-        }
-
-        return this.model.getDataInIndex(index)
-    }
-
-    getDoneInIndex(index){
-        if(index < 0 || index >= this.model.todoList.length){
-            return null
-        }
-
-        return this.model.getDoneInIndex(index)
     }
 
     clearAllTodos() {
