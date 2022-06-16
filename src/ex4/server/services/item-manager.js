@@ -66,10 +66,7 @@ export default class ItemManager {
         return Promise.all(pokemonArr)
             .then(response => {
                 response.forEach(res => {
-                    const types = this.pokemonClient.getTypes(res)
-                    const dataRetrieved = this.pokemonClient.returnPokemonData(res, types)
-                    const {value, isPokemon, imagePokemonPath} = dataRetrieved
-                    this.addTodoParse(value, isPokemon, imagePokemonPath)
+                    this.addMultiplePokemonsTodo(res)
             })
             this.updateTodos()
         }).catch(error => {
@@ -80,6 +77,13 @@ export default class ItemManager {
             this.addTodoParse(value, isPokemon, imagePokemonPath)
             this.updateTodos()
         })
+    }
+
+    addMultiplePokemonsTodo(res){
+        const types = this.pokemonClient.getTypes(res)
+        const dataRetrieved = this.pokemonClient.returnPokemonData(res, types)
+        const {value, isPokemon, imagePokemonPath} = dataRetrieved
+        this.addTodoParse(value, isPokemon, imagePokemonPath)
     }
 
     async handleAddSinglePokemonTodo(enterValue){
@@ -99,6 +103,7 @@ export default class ItemManager {
     }
 
     addTodoParse(value, isPokemon, imagePokemonPath){
+        //generate unique id
         const id = Math.floor((1 + Math.random()) * 0x10000)
             .toString(16)
             .substring(1)

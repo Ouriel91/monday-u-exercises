@@ -40,7 +40,6 @@ todoRouter.get('/', (req, res) => {
         let filteteredData = [];
         if(filter === 'checked'){
             filteteredData = data.filter(t => t.done === true);
-            console.log("fl checked",filteteredData)
         }else{
             filteteredData = data.filter(t => t.done === false);
         }
@@ -73,7 +72,7 @@ todoRouter.post("/", async(req, res) => {
 })
 
 todoRouter.delete("/:id", (req, res) => {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
 
     if(id === -1){ //some recogintion for delete all todos
         itemManager.clearAllTodos()
@@ -98,7 +97,7 @@ todoRouter.put("/:id", (req, res) => {
     
     if(checked !== undefined){
         const {status, index} = req.body
-        console.log(index, status)
+        
         if(status){
             itemManager.checkTodo(index)
         }
@@ -110,7 +109,7 @@ todoRouter.put("/:id", (req, res) => {
     }
 
     const {todo} = req.body
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const editTodo = itemManager.editDataInIndex(todo, id)
 
     if(editTodo === null){
@@ -124,7 +123,7 @@ todoRouter.put("/:id", (req, res) => {
 })
 
 todoRouter.get('/:id', (req, res) => {
-    const id = Number.parseInt(req.params.id)
+    const id = req.params.id
     const dataInIndex = itemManager.getDataInIndex(id)
 
     if(dataInIndex === null){
