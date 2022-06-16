@@ -73,7 +73,6 @@ export default class Main{
             }
 
             let checked = `<input class="check-todo" id="${todo.id}" type="checkbox">`
-            console.log(todo.done)
             if(todo.done){
                 checked = `<input class="check-todo" id="${todo.id}" type="checkbox" checked>`
             }
@@ -151,6 +150,7 @@ export default class Main{
 
         if(inputIsEmpty){
             alert("todo cannot be empty")
+            return
         }
         else{
             alert(`added new todo ${enterValue}`)

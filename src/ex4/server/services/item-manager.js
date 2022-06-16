@@ -99,7 +99,9 @@ export default class ItemManager {
     }
 
     addTodoParse(value, isPokemon, imagePokemonPath){
-        const id = new Date().getTime()
+        const id = Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1)
         this.model.addData({title: value, done: false, isPokemon, imagePokemonPath, id})
     }
 
@@ -156,19 +158,18 @@ export default class ItemManager {
     }
 
     checkTodo(id) {
-        console.log(id)
-        const index = this.model.todoList.findIndex(item => item.id === Number.parseInt(id))
+        const index = this.model.todoList.findIndex(item => item.id === id)
         if(index === -1){
             return null;
         }
-        console.log(index)
+    
         const todo = this.model.checkUncheckTodo(index,true)
         this.updateTodos()
         return todo
     }
 
     uncheckTodo(id) {
-        const index = this.model.todoList.findIndex(item => item.id === Number.parseInt(id))
+        const index = this.model.todoList.findIndex(item => item.id === id)
         if(index === -1){
             return null;
         }

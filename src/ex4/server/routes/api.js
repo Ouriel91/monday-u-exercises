@@ -29,15 +29,18 @@ todoRouter.get('/', (req, res) => {
             return
         }
         else { //for all list case
+            res.status(200).json({});
             return
         }
 
     }
     if(filter){
         const data = itemManager.getTodoList()
+
         let filteteredData = [];
         if(filter === 'checked'){
             filteteredData = data.filter(t => t.done === true);
+            console.log("fl checked",filteteredData)
         }else{
             filteteredData = data.filter(t => t.done === false);
         }
@@ -95,7 +98,7 @@ todoRouter.put("/:id", (req, res) => {
     
     if(checked !== undefined){
         const {status, index} = req.body
-        
+        console.log(index, status)
         if(status){
             itemManager.checkTodo(index)
         }

@@ -10,7 +10,7 @@ export default class ItemClient {
     }
 
     async addTodo(value) {
-        const response = await fetch(SERVER_URL, 
+        await fetch(SERVER_URL, 
         {
             method: 'POST',
             headers: {
@@ -18,9 +18,6 @@ export default class ItemClient {
             },
             body: JSON.stringify({todo: value})
         })
-
-        const data = await response.json()
-        console.log("add",data)
     }
 
     async deleteTodo(index){
