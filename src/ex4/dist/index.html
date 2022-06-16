@@ -10,9 +10,16 @@
     <div class="container">
         <div class="top">
             <h1 class="title">PokeDoList</h1>
+            <label class="switch" id="switch">
+                <input type="checkbox" id="switch-input">
+                <span class="slider round"></span>
+            </label>
             <select id="order-select" class="filter-select">
-                <option value="A-Z">A-Z</option>
-                <option value="Z-A">Z-A</option>
+                <option value="all">ALL LIST</option>
+                <option value="atoz">A-Z ORDER</option>
+                <option value="ztoa">Z-A ORDER</option>
+                <option value="dtou">DONE UNDONE ORDER</option>
+                <option value="utod">UNDONE DONE ORDER</option>
             </select>
         </div>
         <div class="loader" id="loader"></div>

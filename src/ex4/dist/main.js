@@ -6,7 +6,8 @@ export default class Main{
         this.todoList = []
     }
 
-    showTodos() {
+    async showTodos() {
+        await this.getTotdoList()
         this.createTodoListItems() 
     }
 
@@ -51,29 +52,32 @@ export default class Main{
     createItemsByCurrentData(){
         const todoListElement = document.getElementById("todo-list")
 
-        this.createListItems().then((listItems) => {
-            todoListElement.innerHTML = listItems
-            this.showMatchUiByTodosNumber() 
-            this.createItemsFuctionality()
-        })
+        const listItems = this.createListItems();
+        todoListElement.innerHTML = listItems
+        this.showMatchUiByTodosNumber() 
+        this.createItemsFuctionality()
+        
     }
 
-    async createListItems(){
-        let listItems = ""
-
+    async getTotdoList() {
         this.loaderActiveDeActive(true)
         this.todoList = await this.itemClient.getTodoList()
+    }
 
+    createListItems(){
+        let listItems = ""
         this.todoList.forEach((todo) => { 
             let image = ""
             if(todo.isPokemon){
                 image = `<img class="image" src="${todo.imagePokemonPath}" />`
             }
 
-            let checked = `<input id="check-todo" type="checkbox">`
+            let checked = `<input class="check-todo" id="${todo.id}" type="checkbox">`
+            console.log(todo.done)
             if(todo.done){
-                checked = `<input id="check-todo" type="checkbox" checked>`
+                checked = `<input class="check-todo" id="${todo.id}" type="checkbox" checked>`
             }
+
             listItems += 
             `<li class="todo-item">
                 ${checked}
@@ -106,18 +110,25 @@ export default class Main{
         const todos = document.querySelectorAll(".todo-title")
         const checkTodos = document.querySelectorAll(".check-todo")
 
-        deleteItems.forEach((item, index) => {
+        deleteItems.forEach((item) => {
             item.addEventListener("click", () => this.deleteTodo(item.id))
         })
 
-        editItems.forEach((item, index) => {
-            item.addEventListener("click", async(e) => {
+        editItems.forEach((item) => {
+            item.addEventListener("click", async() => {
                 const data = item.getAttribute("data-title")
                 let value = prompt("change this todo to regular todo", data)
                 if(value === null){
                     return
                 }
                 await this.editDataInIndex(value, item.id)
+            })
+        })
+
+        checkTodos.forEach((item) => {
+            item.addEventListener("change", () => {
+                const status = item.checked
+                this.changeDoneStatus(item.id, status)     
             })
         })
     }
@@ -175,39 +186,21 @@ export default class Main{
         this.showTodos()
     }
 
-    orderDataAlphabetically() {
-        this.itemClient.getTodoList("?sort=atoz")
+    sortTodos(value) {
+        this.itemClient.getTodoList(`?sort=${value}`)
         this.showTodos()
-    }
-
-    orderDataAlphabeticallyReverse() {
-        this.itemClient.getTodoList("?sort=ztoa")
-        this.showTodos()
-    }
-
-    orderUnDoneToDone() {
-        //this.itemManager.orderUnDoneToDone()
-    }
-
-    orderDoneToUnDone(){
-        //this.itemManager.orderDoneToUnDone()
     }
 
     changeDoneStatus(index, status) {
-        if(status){
-            //return this.itemManager.checkTodo(index)
-        }
-        else{
-            //return this.itemManager.uncheckTodo(index)
-        }
+        this.itemClient.editCheckTodoIndex(index, status);
+        this.showTodos()
     }
 
-    getDoneTodos(){
-        //return this.itemManager.getDoneTodos()
-    }
-
-    getUnDoneTodos(){
-        //return this.itemManager.getUnDoneTodos()
+    async fileterDoneUndoneTodos(value) {
+        this.loaderActiveDeActive(true)
+        this.todoList = await this.itemClient.getTodoList(`?filter=${value}`)
+        
+        this.createTodoListItems();
     }
 
     loaderActiveDeActive(value){
@@ -230,6 +223,7 @@ function onDOMReady() {
     const todoInput = document.getElementById("todo-input")
     const clearAllTodosButton = document.getElementById("clear-all-todos-button")
     const orderSelect = document.getElementById("order-select")
+    const switchBtn = document.getElementById("switch-input")
 
     const main = new Main();
     main.showTodos()
@@ -261,11 +255,15 @@ function onDOMReady() {
     }) 
     
     orderSelect.addEventListener('change', (e) => {
-        if(e.target.value === "A-Z") {
-            main.orderDataAlphabetically()
-        }
-        else if(e.target.value === "Z-A"){
-            main.orderDataAlphabeticallyReverse()
+        main.sortTodos(e.target.value)
+    })
+
+    switchBtn.addEventListener('click', (e) => {
+        if(e.target.checked){
+            main.fileterDoneUndoneTodos('checked');
+        }else{
+
+            main.fileterDoneUndoneTodos('unchecked');
         }
     })
 }

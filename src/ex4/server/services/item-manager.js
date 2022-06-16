@@ -155,18 +155,21 @@ export default class ItemManager {
         this.updateTodos()
     }
 
-    checkTodo(index) {
-        if(index < 0 || index >= this.model.todoList.length){
+    checkTodo(id) {
+        console.log(id)
+        const index = this.model.todoList.findIndex(item => item.id === Number.parseInt(id))
+        if(index === -1){
             return null;
         }
-
+        console.log(index)
         const todo = this.model.checkUncheckTodo(index,true)
         this.updateTodos()
         return todo
     }
 
-    uncheckTodo(index) {
-        if(index < 0 || index >= this.model.todoList.length){
+    uncheckTodo(id) {
+        const index = this.model.todoList.findIndex(item => item.id === Number.parseInt(id))
+        if(index === -1){
             return null;
         }
 

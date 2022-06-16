@@ -6,16 +6,43 @@ const todoRouter = express.Router();
 const itemManager = new ItemManager();
 
 todoRouter.get('/', (req, res) => {
-    const {sort} = req.query;
+    const {sort, filter} = req.query;
     
     if(sort){
         if(sort === 'atoz'){
             itemManager.orderDataAlphabetically()
+            res.status(200).json({});
             return
         }else if (sort === 'ztoa'){
             itemManager.orderDataAlphabeticallyReverse()
+            res.status(200).json({});
             return
         }
+        else if (sort === 'dtou'){
+            itemManager.orderDoneToUnDone()
+            res.status(200).json({});
+            return
+        }
+        else if (sort === 'utod'){
+            itemManager.orderUnDoneToDone()
+            res.status(200).json({});
+            return
+        }
+        else { //for all list case
+            return
+        }
+
+    }
+    if(filter){
+        const data = itemManager.getTodoList()
+        let filteteredData = [];
+        if(filter === 'checked'){
+            filteteredData = data.filter(t => t.done === true);
+        }else{
+            filteteredData = data.filter(t => t.done === false);
+        }
+        res.status(200).json(filteteredData);
+        return
     }
     const data = itemManager.getTodoList()
     res.status(200).json(data);
@@ -63,6 +90,22 @@ todoRouter.delete("/:id", (req, res) => {
 })
 
 todoRouter.put("/:id", (req, res) => {
+
+    const {checked} = req.query
+    
+    if(checked !== undefined){
+        const {status, index} = req.body
+        
+        if(status){
+            itemManager.checkTodo(index)
+        }
+        else{
+            itemManager.uncheckTodo(index)
+        }
+        res.status(200).json({})
+        return 
+    }
+
     const {todo} = req.body
     const id = Number.parseInt(req.params.id)
     const editTodo = itemManager.editDataInIndex(todo, id)
