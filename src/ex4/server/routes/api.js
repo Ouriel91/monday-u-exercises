@@ -6,16 +6,15 @@ const todoRouter = express.Router();
 const itemManager = new ItemManager();
 
 todoRouter.get('/', (req, res) => {
-    // http://localhost:8080/todo?sort=status
-    // http://localhost:8080/todo?sort=title
     const {sort} = req.query;
+    
     if(sort){
         if(sort === 'atoz'){
-            console.log("atoz")
             itemManager.orderDataAlphabetically()
             return
-        }else if (sort === 'title'){
-
+        }else if (sort === 'ztoa'){
+            itemManager.orderDataAlphabeticallyReverse()
+            return
         }
     }
     const data = itemManager.getTodoList()

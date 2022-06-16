@@ -176,12 +176,13 @@ export default class Main{
     }
 
     orderDataAlphabetically() {
-        /* this.itemClient.getTodoList("sort=atoz")
-        this.showTodos() */
+        this.itemClient.getTodoList("?sort=atoz")
+        this.showTodos()
     }
 
     orderDataAlphabeticallyReverse() {
-        //this.itemManager.orderDataAlphabeticallyReverse()
+        this.itemClient.getTodoList("?sort=ztoa")
+        this.showTodos()
     }
 
     orderUnDoneToDone() {
@@ -263,8 +264,8 @@ function onDOMReady() {
         if(e.target.value === "A-Z") {
             main.orderDataAlphabetically()
         }
-        else{
-            //main.filterDataZToA()
+        else if(e.target.value === "Z-A"){
+            main.orderDataAlphabeticallyReverse()
         }
     })
 }

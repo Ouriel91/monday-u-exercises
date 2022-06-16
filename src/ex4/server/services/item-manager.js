@@ -165,6 +165,16 @@ export default class ItemManager {
         return todo
     }
 
+    uncheckTodo(index) {
+        if(index < 0 || index >= this.model.todoList.length){
+            return null;
+        }
+
+        const todo = this.model.checkUncheckTodo(index, false)
+        this.updateTodos()
+        return todo
+    }
+
     editDataInIndex(value, id){
         const index = this.model.todoList.findIndex(item => item.id === id)
         if(index === -1){
@@ -172,16 +182,6 @@ export default class ItemManager {
         }
         
         const todo = this.model.editDataInIndex(value, index)
-        this.updateTodos()
-        return todo
-    }
-
-    uncheckTodo(index) {
-        if(index < 0 || index >= this.model.todoList.length){
-            return null;
-        }
-
-        const todo = this.model.checkUncheckTodo(index, false)
         this.updateTodos()
         return todo
     }
