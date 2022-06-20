@@ -45,64 +45,6 @@ export default class ItemManager {
         }
     }
 
-    async handleAddSingleOrMultiPokemonsTodo(enterValue){
-
-        if(enterValue.includes(",")){
-            await this.handleAddMultiPokemonsTodo(enterValue)
-        }
-        else {
-            await this.handleAddSinglePokemonTodo(enterValue)
-        }
-    }
-
-    async handleAddMultiPokemonsTodo(enterValue){
-
-        const split = enterValue.split(",")
-        const pokemonArr = []
-
-        for(let i = 0; i < split.length; i++){
-            pokemonArr.push(this.pokemonClient.fetchMulti(ItemManager.trim(split[i])))
-        }
-
-        return Promise.all(pokemonArr)
-            .then(response => {
-                response.forEach(res => {
-                    this.addMultiplePokemonsTodo(res)
-            })
-            this.updateTodos()
-        }).catch(error => {
-            console.log(error)
-            this.addFailToLoadPokemonsTodo()
-        })
-    }
-
-    addMultiplePokemonsTodo(res){
-        const types = this.pokemonClient.getTypes(res)
-        const dataRetrieved = this.pokemonClient.returnPokemonData(res, types)
-        const {value, isPokemon, imagePokemonPath} = dataRetrieved
-        this.addTodoParse(value, isPokemon, imagePokemonPath)
-    }
-
-    addFailToLoadPokemonsTodo(enterValue){
-        const isPokemon = false
-        const imagePokemonPath = null
-        const value = `failed to fetch pokemon with this input: ${enterValue}`
-        this.addTodoParse(value, isPokemon, imagePokemonPath)
-        this.updateTodos()
-    }
-
-    async handleAddSinglePokemonTodo(enterValue){
-        const dataRetrieved = await this.pokemonClient.fetchSingle(enterValue)
-        if(dataRetrieved){
-            const {value, isPokemon, imagePokemonPath} = dataRetrieved
-            this.addTodoParse(value, isPokemon, imagePokemonPath)
-            this.updateTodos()
-        }
-        else {
-            this.addFailToLoadPokemonsTodo(enterValue)
-        }   
-    }
-
     addTodoParse(value, isPokemon, imagePokemonPath){
         //generate unique id
         const id = Math.floor((1 + Math.random()) * 0x10000)
