@@ -1,7 +1,4 @@
-import fs from 'fs';
-import * as url from 'url';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path'
+import {readData, writeData} from './data-acess.js'
 
 export default class TodoListModel {
     constructor() {
@@ -9,11 +6,9 @@ export default class TodoListModel {
     }
 
     loadDataFromFile(){
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(__filename);
         
         try {
-            const data = fs.readFileSync(`${__dirname}/todo.json`, 'utf8');
+            const data = readData()
             if(data === null){
                 this.todoList = []
             }
@@ -36,13 +31,7 @@ export default class TodoListModel {
     }
 
     saveDataToFile(){ 
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(__filename);
-        fs.writeFile(`${__dirname}/todo.json`, JSON.stringify(this.todoList), err => {
-            if(err) {
-                console.log(err)
-            }
-        })
+        writeData(this.todoList)
     }
 
     clearAllData(){

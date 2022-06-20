@@ -2,6 +2,7 @@
 
 import TodoListModel from "../model/todolist-model.js"
 import PokemonClient from "../clients/pokemon-client.js"
+import {handleAddSingleOrMultiPokemonsTodo} from './pokemon-utils.js'
 
 const singleNumber = /^\d+$/
 const singleWord = /^[A-Za-z]+$/
@@ -34,7 +35,7 @@ export default class ItemManager {
                 singleNumberPattern !== null || 
                     multiNumberPattern !== null || 
                         partOfNumbersSeprateWithComma !== null) {
-            await this.handleAddSingleOrMultiPokemonsTodo(trimValue)
+            await handleAddSingleOrMultiPokemonsTodo(this.model, this.pokemonClient, trimValue)
         }
         else{ //noraml todo
             const isPokemon = false
