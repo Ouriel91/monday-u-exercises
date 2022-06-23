@@ -145,7 +145,7 @@ module.exports = class ItemManager {
         const todo = await Todos.findOne({where:{id}})
         todo.itemName = value  
         await todo.save()
-        ////
+        
         return todo
     }
 
