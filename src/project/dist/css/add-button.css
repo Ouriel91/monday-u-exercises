@@ -1,0 +1,13 @@
+.add-button {
+    width: 10%;
+    min-width: 35px;
+    height: 50px;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.add-button.active, .clear-all-button.active {
+    opacity: 1;
+    transform: scale(0.98);
+    cursor: pointer;
+}
