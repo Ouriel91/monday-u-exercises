@@ -77,33 +77,39 @@ todoRouter.delete("/:id", async(req, res) => {
 
 todoRouter.put("/:id", async(req, res) => {
 
-    const {checked} = req.query
+    const id = req.params.id
+    const {status, todo} = req.body
     
-    if(checked !== undefined){
-        const {status, index} = req.body
+    if(status !== null){
         
         if(status){
-            await itemManager.checkUncheckTodo(index, true)
+            try{
+                await itemManager.checkUncheckTodo(id, true)
+                res.status(200).json({})
+            }catch(err){
+                res.status(404).json({error: err.toString()})
+            }
         }
         else{
-            await itemManager.checkUncheckTodo(index, false)
+            try{
+                await itemManager.checkUncheckTodo(id, false)
+                res.status(200).json({})
+            }catch(err){
+                res.status(404).json({error: err.toString()})
+            }
         }
-        res.status(200).json({})
+        
         return 
     }
 
-    const {todo} = req.body
-    const id = req.params.id
-    const editTodo = await itemManager.editDataInIndex(todo, id)
-
-    if(editTodo === null){
-        let error = new Error()
-        error.statusCode = 404
-        error.message = "Invalid index to update item"
-        throw error
-     }
- 
-     res.status(200).json(editTodo)
+    if(todo !== null){
+        try{
+            const editTodo = await itemManager.editDataInIndex(todo, id)
+            res.status(200).json(editTodo)
+        }catch (err){
+            res.status(404).json({error: err.toString()})
+        }
+    }
 })
 
 module.exports = todoRouter;

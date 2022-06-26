@@ -1,4 +1,5 @@
 const {Todos}  = require('../db/models')
+const generateUniqueId = require('./generate-unique-id')
 
 module.exports = async function handleAddSingleOrMultiPokemonsTodo(pokemonClient, enterValue){
 
@@ -16,7 +17,7 @@ async function handleAddMultiPokemonsTodo(pokemonClient, enterValue){
     const pokemonArr = []
 
     for(let i = 0; i < split.length; i++){
-        pokemonArr.push(pokemonClient.fetchMulti(trim(split[i])))
+        pokemonArr.push(pokemonClient.fetchMulti(sanitize(split[i])))
     }
 
     return Promise.all(pokemonArr)
@@ -38,10 +39,7 @@ async function addMultiplePokemonsTodo(res , pokemonClient) {
 }
 
 async function addTodoParse(value, isPokemon, imagePokemonPath){
-    //generate unique id
-    const id = Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1)
+    const id = generateUniqueId()
     
     await Todos.create({itemId: id, itemName: value, status:false, imagePokemonPath, isPokemon})
 }
@@ -66,6 +64,6 @@ async function handleAddSinglePokemonTodo(pokemonClient, enterValue){
     }   
 }
 
-function trim(value) {
+function sanitize(value) {
     return value.replace(/^\s+|\s+$/g,"");
 }

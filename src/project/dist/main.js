@@ -130,7 +130,7 @@ export default class Main{
                 if(value === null){
                     return
                 }
-                await this.editDataInIndex(value, item.id)
+                await this.editDataInIndex(value, item.id, null)
             })
         })
     }
@@ -176,9 +176,9 @@ export default class Main{
         addTodoButton.classList.remove("active")
     }
 
-    async editDataInIndex(value, index){
+    async editDataInIndex(value, id, status){
         this.loaderActiveDeActive(true)
-        const editedData = await this.itemClient.editTodoIndex(value, index)
+        const editedData = await this.itemClient.editTodo(id, value, status)
         this.loaderActiveDeActive(false)
         
         alert(`data edited to ${editedData.itemName}`)
@@ -202,8 +202,8 @@ export default class Main{
         this.showTodos();
     }
 
-    async changeDoneStatus(index, status) {
-        await this.itemClient.editCheckTodoIndex(index, status);
+    async changeDoneStatus(id, status) {
+        await this.itemClient.editTodo(id,null, status);
         this.showTodos()
     }
 

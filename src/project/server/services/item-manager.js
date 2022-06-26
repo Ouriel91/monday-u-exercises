@@ -1,10 +1,8 @@
 const PokemonClient =  require("../clients/pokemon-client.js")
-const handleAddSingleOrMultiPokemonsTodo = require('./pokemon-utils.js')
+const handleAddSingleOrMultiPokemonsTodo = require('./pokemon-helpers.js')
 const {Todos}  = require('../db/models')
-
-const singleNumber = /^\d+$/
-const singleWord = /^[A-Za-z]+$/
-const multiNumbersSeparatedWithComma = /^\d+(,\d+)*$/
+const generateUniqueId = require('./generate-unique-id')
+const inputValidator  = require("./input-validation.js")
 
 module.exports = class ItemManager {
     constructor(main){
@@ -13,24 +11,15 @@ module.exports = class ItemManager {
     }
 
     async addTodo(enterValue){
-        const trimValue = ItemManager.trim(enterValue)
+        const trimValue = ItemManager.sanitize(enterValue)
         if(trimValue === "") return
 
         await this.handleInputToAdd(trimValue)
     }
 
     async handleInputToAdd(trimValue){
-        const partOfNumbersSeprateWithComma = 
-            trimValue.substring(0,1).match(multiNumbersSeparatedWithComma)
-
-        const singleNumberPattern = trimValue.match(singleNumber)
-        const singleWordPattern = trimValue.match(singleWord)
-        const multiNumberPattern = trimValue.match(multiNumbersSeparatedWithComma) 
     
-        if(singleWordPattern !== null || 
-                singleNumberPattern !== null || 
-                    multiNumberPattern !== null || 
-                        partOfNumbersSeprateWithComma !== null) {
+        if(inputValidator(trimValue)) {
             await handleAddSingleOrMultiPokemonsTodo(this.pokemonClient, trimValue)
         }
         else{ //noraml todo
@@ -56,7 +45,7 @@ module.exports = class ItemManager {
         const pokemonArr = []
 
         for(let i = 0; i < split.length; i++){
-            pokemonArr.push(this.pokemonClient.fetchMulti(ItemManager.trim(split[i])))
+            pokemonArr.push(this.pokemonClient.fetchMulti(ItemManager.sanitize(split[i])))
         }
 
         return Promise.all(pokemonArr)
@@ -96,15 +85,12 @@ module.exports = class ItemManager {
     }
 
     async addTodoParse(value, isPokemon, imagePokemonPath){
-        //generate unique id
-        const id = Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1)
+        const id = generateUniqueId()
 
         await Todos.create({itemId: id, itemName: value, status:false, isPokemon, imagePokemonPath})
     }
 
-    static trim(value) {
+    static sanitize(value) {
         return value.replace(/^\s+|\s+$/g,"");
     }
 
