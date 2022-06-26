@@ -90,31 +90,35 @@ todoRouter.put("/:id", (req, res) => {
 
     const id = req.params.id
     const {status, todo} = req.body
-    console.log(req.body)
 
     if(status !== null){
         
         if(status){
-            itemManager.checkTodo(id)
+            try{
+                itemManager.checkTodo(id)
+                res.status(200).json({})
+            }catch(err){
+                res.status(404).json({error: err.toString()})
+            }
         }
         else{
-            itemManager.uncheckTodo(id)
+            try{
+                itemManager.uncheckTodo(id)
+                res.status(200).json({})
+            }catch(err){
+                res.status(404).json({error: err.toString()})
+            }
         }
-        res.status(200).json({})
         return 
     }
 
     if(todo !== null){
-        const editTodo = itemManager.editDataInIndex(todo, id)
-
-        if(editTodo === null){
-            let error = new Error()
-            error.statusCode = 404
-            error.message = "Invalid index to update item"
-            throw error
+        try{
+            const editTodo = itemManager.editDataInIndex(todo, id)
+            res.status(200).json(editTodo)
+        }catch (err){
+            res.status(404).json({error: err.toString()})
         }
- 
-        res.status(200).json(editTodo)
     }
   
 })

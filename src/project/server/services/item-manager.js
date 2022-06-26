@@ -45,7 +45,7 @@ export default class ItemManager {
     deleteTodo(id) {
         const index = this.model.todoList.findIndex(item => item.id === id);
         if(index === -1){
-            throw new Error("Invalid id")
+            throw new Error("Invalid id to delete")
         }
     
         const removedTodo = this.model.todoList[index]
@@ -77,7 +77,7 @@ export default class ItemManager {
     checkTodo(id) {
         const index = this.model.todoList.findIndex(item => item.id === id)
         if(index === -1){
-            return null;
+            throw new Error("Invalid id to check")
         }
     
         const todo = this.model.checkUncheckTodo(index,true)
@@ -88,7 +88,7 @@ export default class ItemManager {
     uncheckTodo(id) {
         const index = this.model.todoList.findIndex(item => item.id === id)
         if(index === -1){
-            return null;
+            throw new Error("Invalid id to uncheck")
         }
 
         const todo = this.model.checkUncheckTodo(index, false)
@@ -99,7 +99,7 @@ export default class ItemManager {
     editDataInIndex(value, id){
         const index = this.model.todoList.findIndex(item => item.id === id)
         if(index === -1){
-            return null;
+            throw new Error("Invalid id to edit")
         }
         
         const todo = this.model.editDataInIndex(value, index)
