@@ -55,14 +55,13 @@ todoRouter.post("/", async(req, res) => {
     }
 })
 
+todoRouter.delete('/delete-all', async(req, res) => {
+    await itemManager.clearAllTodos()
+    res.status(200).json({});
+})
+
 todoRouter.delete("/:id", async(req, res) => {
     const id = req.params.id
-
-    if(id === "delete-all"){ //some recogintion for delete all todos
-        await itemManager.clearAllTodos()
-        res.status(200).json({});
-        return
-    }
 
     const deletedTodo = await itemManager.deleteTodo(id)
     if(deletedTodo === null){

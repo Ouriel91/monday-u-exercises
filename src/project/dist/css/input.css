@@ -1,0 +1,22 @@
+.input-container {
+    display: flex;
+    margin: 20px 0;
+    height: 45px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.todo-input {
+    width: 85%;
+    height: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.todo-input:focus {
+    border: 2px solid #5f56c4;
+}

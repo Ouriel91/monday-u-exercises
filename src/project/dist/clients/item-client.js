@@ -42,19 +42,5 @@ export default class ItemClient {
 
         return data
     }
-
-    /* async editCheckTodoIndex(index, status) {
-        const response = await fetch(`${SERVER_URL}/${index}?checked=${status}`, 
-        {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({status, index})
-        })
-        const data = await response.json()
-
-        return data
-    } */
 }
 

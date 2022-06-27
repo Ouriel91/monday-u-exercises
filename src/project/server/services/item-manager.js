@@ -1,7 +1,7 @@
 const PokemonClient =  require("../clients/pokemon-client.js")
 const handleAddSingleOrMultiPokemonsTodo = require('./pokemon-helpers.js')
 const {Todos}  = require('../db/models')
-const generateUniqueId = require('./generate-unique-id')
+const addTodoData = require('./add-todo-data.js')
 const inputValidator  = require("./input-validation.js")
 
 module.exports = class ItemManager {
@@ -23,71 +23,8 @@ module.exports = class ItemManager {
             await handleAddSingleOrMultiPokemonsTodo(this.pokemonClient, trimValue)
         }
         else{ //noraml todo
-            const isPokemon = false
-            const imagePokemonPath = null
-            await this.addTodoParse(trimValue, isPokemon, imagePokemonPath)
+            await addTodoData(trimValue, false, null)
         }
-    }
-
-    async handleAddSingleOrMultiPokemonsTodo(enterValue){
-
-        if(enterValue.includes(",")){
-            await this.handleAddMultiPokemonsTodo(enterValue)
-        }
-        else {
-            await this.handleAddSinglePokemonTodo(enterValue)
-        }
-    }
-
-    async handleAddMultiPokemonsTodo(enterValue){
-
-        const split = enterValue.split(",")
-        const pokemonArr = []
-
-        for(let i = 0; i < split.length; i++){
-            pokemonArr.push(this.pokemonClient.fetchMulti(ItemManager.sanitize(split[i])))
-        }
-
-        return Promise.all(pokemonArr)
-            .then( response => {
-                response.forEach(async(res) => {
-                    await this.addMultiplePokemonsTodo(res)
-            })
-        }).catch(async (error) => {
-            console.log(error)
-            await this.addFailToLoadPokemonsTodo()
-        })
-    }
-
-    async addMultiplePokemonsTodo(res){
-        const types = this.pokemonClient.getTypes(res)
-        const dataRetrieved = this.pokemonClient.returnPokemonData(res, types)
-        const {value, isPokemon, imagePokemonPath} = dataRetrieved
-       await this.addTodoParse(value, isPokemon, imagePokemonPath)
-    }
-
-    async addFailToLoadPokemonsTodo(enterValue){
-        const isPokemon = false
-        const imagePokemonPath = null
-        const value = `failed to fetch pokemon with this input: ${enterValue}`
-        await this.addTodoParse(value, isPokemon, imagePokemonPath)
-    }
-
-    async handleAddSinglePokemonTodo(enterValue){
-        const dataRetrieved = await this.pokemonClient.fetchSingle(enterValue)
-        if(dataRetrieved){
-            const {value, isPokemon, imagePokemonPath} = dataRetrieved
-            await this.addTodoParse(value, isPokemon, imagePokemonPath)
-        }
-        else {
-            await this.addFailToLoadPokemonsTodo(enterValue)
-        }   
-    }
-
-    async addTodoParse(value, isPokemon, imagePokemonPath){
-        const id = generateUniqueId()
-
-        await Todos.create({itemId: id, itemName: value, status:false, isPokemon, imagePokemonPath})
     }
 
     static sanitize(value) {
