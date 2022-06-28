@@ -5,9 +5,8 @@ const addTodoData = require('./add-todo-data.js')
 const inputValidator  = require("./input-validation.js")
 
 module.exports = class ItemManager {
-    constructor(main){
+    constructor(){
         this.pokemonClient = new PokemonClient()
-        this.main = main;
     }
 
     async addTodo(enterValue){
