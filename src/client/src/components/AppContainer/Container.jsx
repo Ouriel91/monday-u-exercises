@@ -14,13 +14,14 @@ function Container() {
         editTodo, 
         deleteTodo, 
         getTodos, 
-        todos
+        todos,
+        loader
     } = useContainer();
 
     return (
         <div className={styles.container}>
             <Top getTodos={getTodos}/>
-            <Loader />
+            {loader ? <Loader /> : null}
             <Input addTodo={addTodo}/>
             {
             todos.length > 0 ? 
