@@ -7,8 +7,8 @@ function useInput(addTodo) {
     const handleAddTodo = () => {
 
         if(textInput.trim() === '') {
-        alert('Todo can not be empty')
-        return
+            alert('Todo can not be empty')
+            return
         }
 
         addTodo(textInput)
@@ -17,10 +17,9 @@ function useInput(addTodo) {
 
     const handleAddTodoWithEnter = (e) => {
         if(e.key === 'Enter'){
-        handleAddTodo()
+            handleAddTodo()
         }
     }
-
 
     return {
         textInput, 

@@ -3,11 +3,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 function TodoItem({todo, addTodo, deleteTodo, editTodo}) {
+
+  const handleEditCheck = (todo, checkStatus) => {
+    editTodo(todo.id, null, checkStatus)
+  }
+
+  const handleEditValue = async (todo) => {
+    const value = prompt(`edit ${todo.itemName}`,todo.itemName)
+                
+    if(value === null) return
+    await editTodo(todo.id,value, null)
+  }
+
+  const handleDelete = (todo) => {
+    deleteTodo(todo.id)
+  }
+
   return (
     <li className={styles.todoItem}>
         <input type="checkbox" 
           checked={todo.status}
-          onChange={(e) => editTodo(todo.id, null, e.target.checked)} />
+          onChange={(e) => handleEditCheck(todo, e.target.checked)} />
         <div className={styles.todoTitle}>
           {todo.itemName}
         </div>
@@ -19,22 +35,14 @@ function TodoItem({todo, addTodo, deleteTodo, editTodo}) {
           <div>
             <span 
               className={[styles.actionBtn, styles.delete].join(' ')} 
-              /* id="2" */
-              onClick={() => {
-                deleteTodo(todo.id)
-              }}>
+              onClick={() => handleDelete(todo)}>
               <FontAwesomeIcon icon={faTrash} />
             </span>
           </div>
           <div>
             <span 
               className={[styles.actionBtn, styles.edit].join(' ')}
-              onClick={async() => {
-                const value = prompt(`edit ${todo.itemName}`,todo.itemName)
-                
-                if(value === null) return
-                await editTodo(todo.id,value, null)
-              }}>
+              onClick={() => handleEditValue(todo)}>
               <FontAwesomeIcon icon={faEdit} />
             </span>
           </div>
