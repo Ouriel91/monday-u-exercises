@@ -3,7 +3,7 @@ import useTodoList from './useTodoList'
 
 function TodoList({todos, addTodo, deleteTodo, editTodo}) {
   
-  const {renderItems} = useTodoList(todos, addTodo, deleteTodo, editTodo)
+  const {renderItems} = useTodoList(todos, deleteTodo, editTodo)
   
   return (
     <ul className={styles.todoListContainer}>

@@ -9,14 +9,14 @@ import Bottom from '../Bottom/Bottom'
 
 function Container() {
 
-   const {
-    addTodo, 
-    editTodo, 
-    deleteTodo, 
-    getTodos, 
-    todos
-   } = useContainer();
-   
+    const {
+        addTodo, 
+        editTodo, 
+        deleteTodo, 
+        getTodos, 
+        todos
+    } = useContainer();
+
     return (
         <div className={styles.container}>
             <Top getTodos={getTodos}/>
@@ -26,7 +26,6 @@ function Container() {
             todos.length > 0 ? 
                 <TodoList 
                     todos={todos}
-                    addTodo={addTodo}
                     deleteTodo={deleteTodo}
                     editTodo={editTodo}/> 
                 : 
