@@ -1,6 +1,6 @@
-import styles from '../css/Bottom.module.css'
-import SumTodos from './SumTodos'
-import ClearAll from './ClearAll'
+import styles from './Bottom.module.css'
+import SumTodos from '../SumTodos/SumTodos'
+import ClearAll from '../ClearAll/ClearAll'
 
 function Bottom() {
   return (

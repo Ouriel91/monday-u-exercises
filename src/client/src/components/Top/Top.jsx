@@ -1,7 +1,6 @@
-import React from 'react'
-import styles from '../css/Top.module.css';
-import FilterTodos from './FilterTodos'
-import SortTodos from './SortTodos'
+import styles from './Top.module.css';
+import FilterTodos from '../FilterTodos/FilterTodos'
+import SortTodos from '../SortTodos/SortTodos'
 
 function Top() {
   return (

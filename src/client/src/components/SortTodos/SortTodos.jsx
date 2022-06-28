@@ -1,4 +1,4 @@
-import styles from '../css/Sort.module.css'
+import styles from './SortTodos.module.css'
 
 function SortTodos() {
   return (

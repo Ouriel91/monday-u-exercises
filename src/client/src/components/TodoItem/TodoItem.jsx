@@ -1,4 +1,4 @@
-import styles from '../css/TodoItem.module.css'
+import styles from './TodoItem.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 

@@ -1,4 +1,4 @@
-import styles from '../css/EmptyTodosShow.module.css'
+import styles from './EmptyTodosShow.module.css'
 
 function EmptyTodosShow() {
   return (

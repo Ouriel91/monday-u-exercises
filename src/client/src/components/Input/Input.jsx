@@ -1,5 +1,5 @@
-import styles from '../css/Input.module.css'
-import anotherStyles from '../css/Container.module.css'
+import styles from './Input.module.css'
+import anotherStyles from '../AppContainer/Container.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 

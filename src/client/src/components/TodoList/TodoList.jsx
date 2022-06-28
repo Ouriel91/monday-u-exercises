@@ -1,5 +1,5 @@
-import styles from '../css/TodoList.module.css'
-import TodoItem from './TodoItem'
+import styles from './TodoList.module.css'
+import TodoItem from '../TodoItem/TodoItem'
 
 function TodoList() {
   return (

@@ -1,5 +1,4 @@
-import React from 'react'
-import styles from '../css/Switch.module.css'
+import styles from './Switch.module.css'
 
 function FilterTodos() {
   return (

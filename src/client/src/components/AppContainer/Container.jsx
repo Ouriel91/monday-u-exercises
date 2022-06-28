@@ -1,12 +1,12 @@
 import {useEffect, useState} from 'react'
-import ItemClient from '../server-api/item-client';
-import styles from '../css/Container.module.css';
-import Top from './Top'
-import Loader from './Loader'
-import Input from './Input'
-import EmptyTodosShow from './EmptyTodosShow'
-import TodoList from './TodoList'
-import Bottom from './Bottom'
+import ItemClient from '../../server-api/item-client';
+import styles from './Container.module.css';
+import Top from '../Top/Top'
+import Loader from '../Loader/Loader'
+import Input from '../Input/Input'
+import EmptyTodosShow from '../EmptyTodosShow/EmptyTodosShow'
+import TodoList from '../TodoList/TodoList'
+import Bottom from '../Bottom/Bottom'
 
 
 function Container() {
