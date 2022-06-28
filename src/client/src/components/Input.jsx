@@ -7,7 +7,7 @@ function Input() {
   return (
     <div className={styles.inputContainer}>
       <input className={styles.todoInput} type="text" placeholder="Add your new todo" />
-      <button class={[anotherStyles.button, styles.addButton].join(' ')}>
+      <button className={[anotherStyles.button, styles.addButton].join(' ')}>
         <FontAwesomeIcon icon={faPlusCircle} />
       </button>
     </div>

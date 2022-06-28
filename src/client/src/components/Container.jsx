@@ -6,6 +6,7 @@ import Loader from './Loader'
 import Input from './Input'
 import EmptyTodosShow from './EmptyTodosShow'
 import TodoList from './TodoList'
+import Bottom from './Bottom'
 
 
 function Container() {
@@ -47,6 +48,7 @@ function Container() {
             <Input />
             <EmptyTodosShow />
             <TodoList />
+            <Bottom />
         </div>
     )
 }
