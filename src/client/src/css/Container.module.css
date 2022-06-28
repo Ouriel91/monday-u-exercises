@@ -1,0 +1,22 @@
+.container {
+    background: #fff;
+    width: 60%;
+    max-height: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
+}
+
+.button {
+    background: #8E49E8;
+    color: #fff;
+    border-radius: 5px;
+    cursor: not-allowed;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}

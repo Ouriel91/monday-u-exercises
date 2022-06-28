@@ -1,0 +1,37 @@
+.inputContainer {
+    display: flex;
+    margin: 20px 0;
+    height: 45px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.todoInput {
+    width: 85%;
+    height: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.todoInput:focus {
+    border: 2px solid #5f56c4;
+}
+
+.addButton {
+    width: 10%;
+    height: 100%;
+    min-width: 35px;
+    height: 50px;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.addButton.active, .clear-all-button.active {
+    opacity: 1;
+    transform: scale(0.98);
+    cursor: pointer;
+}
