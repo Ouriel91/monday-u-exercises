@@ -36,22 +36,13 @@ todoRouter.get('/', async(req, res) => {
 
 todoRouter.post("/", async(req, res) => {
     const {todo} = req.body
-    let error = new Error()
-    
-    if(!todo){
-        error.statusCode = 400
-        error.message = "Invalid todo, todo is null"
-        throw error
-    }
     
     try{
         await itemManager.addTodo(todo)
         res.status(201).json(todo);
     }
-    catch(error){
-        error.statusCode = 400
-        error.message = "failed to add todo"
-        throw error
+    catch(err){
+        res.status(400).json({error: err.toString()})
     }
 })
 
@@ -63,15 +54,13 @@ todoRouter.delete('/delete-all', async(req, res) => {
 todoRouter.delete("/:id", async(req, res) => {
     const id = req.params.id
 
-    const deletedTodo = await itemManager.deleteTodo(id)
-    if(deletedTodo === null){
-        let error = new Error()
-        error.statusCode = 404
-        error.message = "Invalid index to delete item"
-        throw error
+    try{
+        const deletedTodo = await itemManager.deleteTodo(id)
+        res.status(200).json(deletedTodo)
+    }catch (err){
+        res.status(err.statusCode).json({error: err.toString()})
     }
 
-    res.status(200).json(deletedTodo)
 })
 
 todoRouter.put("/:id", async(req, res) => {
@@ -81,23 +70,12 @@ todoRouter.put("/:id", async(req, res) => {
     
     if(status !== null){
         
-        if(status){
-            try{
-                await itemManager.checkUncheckTodo(id, true)
-                res.status(200).json({})
-            }catch(err){
-                res.status(404).json({error: err.toString()})
-            }
-        }
-        else{
-            try{
-                await itemManager.checkUncheckTodo(id, false)
-                res.status(200).json({})
-            }catch(err){
-                res.status(404).json({error: err.toString()})
-            }
-        }
-        
+        try{
+            const updatedTodo = await itemManager.checkUncheckTodo(id, status)
+            res.status(200).json(updatedTodo)
+        }catch(err){
+            res.status(404).json({error: err.toString()})
+        }  
         return 
     }
 

@@ -34,7 +34,13 @@ module.exports = class ItemManager {
     async deleteTodo(id) {
         const removedTodo = await Todos.findOne({where:{id}})
 
-        if(!removedTodo) return null;
+        if(!removedTodo) {
+            
+            let error = new Error()
+            error.statusCode = 404
+            error.message = "Invalid index to delete item"
+            throw error
+        };
         await removedTodo.destroy()
 
         return removedTodo
