@@ -1,28 +1,19 @@
-import {useState} from 'react'
+import useInput from './useInput'
+
 import styles from './Input.module.css'
 import anotherStyles from '../AppContainer/Container.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 function Input({addTodo}) {
-  const [textInput, setTextInput] = useState('')
-
-  const handleAddTodo = () => {
-
-    if(textInput.trim() === '') {
-      return
-    }
-
-    addTodo(textInput)
-    setTextInput('')
-  }
-
-  const handleAddTodoWithEnter = (e) => {
-    if(e.key === 'Enter'){
-      handleAddTodo()
-    }
-  }
-
+  
+  const {
+    textInput, 
+    setTextInput, 
+    handleAddTodo, 
+    handleAddTodoWithEnter
+  } = useInput(addTodo)
+  
   return (
     <div className={styles.inputContainer}>
       <input 

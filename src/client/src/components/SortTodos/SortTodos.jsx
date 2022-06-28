@@ -1,13 +1,12 @@
 import styles from './SortTodos.module.css'
+import useSortTodos from './useSortTodos'
 
 function SortTodos({getTodos}) {
 
-  const handleSorts = (e) => {
-      getTodos(`?sort=${e.target.value}`)
-  }
+  const {handleSorts} = useSortTodos(getTodos)
 
   return (
-    <select className={styles.sort} onChange={handleSorts} value="">
+    <select className={styles.sort} onChange={handleSorts}>
       <option value="">ALL LIST</option>
       <option value="atoz">A-Z</option>
       <option value="ztoa">Z-A</option>

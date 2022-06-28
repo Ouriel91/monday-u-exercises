@@ -6,7 +6,7 @@ function Bottom({length, deleteTodo}) {
   return (
     <div className={styles.bottom}>
         <SumTodos length={length}/>
-        <ClearAll deleteTodo={deleteTodo}/>
+        <ClearAll length={length} deleteTodo={deleteTodo}/>
     </div>
   )
 }

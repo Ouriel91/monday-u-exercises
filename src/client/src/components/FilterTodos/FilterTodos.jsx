@@ -1,15 +1,8 @@
 import styles from './Switch.module.css'
-
+import useFilterTodos from './useFilterTodos'
 function FilterTodos({getTodos}) {
   
-  const handleDoneUndone = (e) => {
-    if(e.target.checked){
-      getTodos(`?filter=checked`)
-    }
-    else{
-      getTodos(`?filter=unchecked`)
-    }
-  }
+  const {handleDoneUndone} = useFilterTodos(getTodos)
 
   return (
     <label className={styles.switch}>           

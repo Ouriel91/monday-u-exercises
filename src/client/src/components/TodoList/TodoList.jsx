@@ -1,13 +1,10 @@
 import styles from './TodoList.module.css'
-import TodoItem from '../TodoItem/TodoItem'
+import useTodoList from './useTodoList'
 
 function TodoList({todos, addTodo, deleteTodo, editTodo}) {
-  const renderItems = todos.map(todo => <TodoItem 
-      key={todo.id} 
-      todo={todo}
-      addTodo={addTodo}
-      deleteTodo={deleteTodo}
-      editTodo={editTodo}/>)
+  
+  const {renderItems} = useTodoList(todos, addTodo, deleteTodo, editTodo)
+  
   return (
     <ul className={styles.todoListContainer}>
       {renderItems}
