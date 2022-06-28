@@ -2,11 +2,11 @@ import styles from './Bottom.module.css'
 import SumTodos from '../SumTodos/SumTodos'
 import ClearAll from '../ClearAll/ClearAll'
 
-function Bottom() {
+function Bottom({length, deleteTodo}) {
   return (
     <div className={styles.bottom}>
-        <SumTodos />
-        <ClearAll />
+        <SumTodos length={length}/>
+        <ClearAll deleteTodo={deleteTodo}/>
     </div>
   )
 }

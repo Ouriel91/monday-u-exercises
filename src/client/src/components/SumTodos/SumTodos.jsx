@@ -1,6 +1,8 @@
-function SumTodos() {
+import styles from './SumTodos.module.css'
+
+function SumTodos({length}) {
   return (
-    <span>You have {} pending tasks</span>
+    <span className={styles.todosCount}>You have {length} pending tasks</span>
   )
 }
 

@@ -10,7 +10,7 @@ export default class ItemClient {
     }
 
     async addTodo(value) {
-        await fetch(SERVER_URL, 
+        const addTodoData = await fetch(SERVER_URL, 
         {
             method: 'POST',
             headers: {
@@ -18,6 +18,9 @@ export default class ItemClient {
             },
             body: JSON.stringify({todo: value})
         })
+        const data = await addTodoData.json()
+
+        return data
     }
 
     async deleteTodo(id){
@@ -26,7 +29,7 @@ export default class ItemClient {
             method: 'DELETE'
         })
         const data = await response.json()
-        return data.itemName
+        return data
     }
 
     async editTodo(id, value, status){
