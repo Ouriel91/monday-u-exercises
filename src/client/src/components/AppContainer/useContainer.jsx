@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react'
 import ItemClient from '../../server-api/item-client';
+import { useAlert } from 'react-alert'
 
 function useContainer() {
 
     const [todos, setTodos] = useState([])
     const [loader, setLoader] = useState(false)
+    const alert = useAlert()
     
     let count = 0;
     useEffect(() => {
@@ -26,8 +28,11 @@ function useContainer() {
     const addTodo = async(value) => {
         setLoader(true);
         await itemClient.addTodo(value);
-        alert(`added new todo`)
         setLoader(false);
+        alert.show('Added new todo', {
+            timeout: 2000,
+            type: 'success',
+        })
         getTodos()
     }
 
@@ -37,10 +42,16 @@ function useContainer() {
 
         const deletedItem = await itemClient.deleteTodo(id);
         if(deletedItem.id) {
-            alert(`delete ${deletedItem.itemName}`)
+            alert.show(`delete ${deletedItem.itemName}`, {
+                timeout: 2000,
+                type: 'error',
+            })
         }
         else{
-            alert(`delete all todos`)
+            alert.show('delete all todos', {
+                timeout: 2000,
+                type: 'error',
+            })
         }
 
         setLoader(false);
@@ -52,10 +63,16 @@ function useContainer() {
         setLoader(true);
         const editedTodo = await itemClient.editTodo(id, value, status)
         if(value !== null){
-            alert(`edited item to ${editedTodo.itemName}`)
+            alert.show(`edited item to ${editedTodo.itemName}`, {
+                timeout: 2000,
+                type: 'info',
+            })
         }
         else if(status !== null){
-            alert(`edited item ${editedTodo.itemName} to ${editedTodo.status ? "done" : "undone"}`)
+            alert.show(`edited item ${editedTodo.itemName} to ${editedTodo.status ? "done" : "undone"}`, {
+                timeout: 2000,
+                type: 'info',
+            })
         }
         
         setLoader(false);

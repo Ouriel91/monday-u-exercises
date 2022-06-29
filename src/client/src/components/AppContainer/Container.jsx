@@ -7,6 +7,7 @@ import EmptyTodosShow from '../EmptyTodosShow/EmptyTodosShow'
 import TodoList from '../TodoList/TodoList'
 import Bottom from '../Bottom/Bottom'
 
+
 function Container() {
 
     const {
@@ -21,6 +22,7 @@ function Container() {
     return (
         <div className={styles.container}>
             <Top getTodos={getTodos}/>
+            
             {loader ? <Loader /> : null}
             <Input addTodo={addTodo}/>
             {
