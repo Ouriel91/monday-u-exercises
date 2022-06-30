@@ -1,5 +1,6 @@
 import styles from './SortTodos.module.css'
 import useSortTodos from './useSortTodos'
+import PropTypes from "prop-types";
 
 function SortTodos({getTodos}) {
 
@@ -14,6 +15,11 @@ function SortTodos({getTodos}) {
       <option value="utod">UNDONE-DONE</option>
     </select>
   )
+}
+
+SortTodos.propTypes = {
+  getTodos: PropTypes.func,
+  handleSorts: PropTypes.func,
 }
 
 export default SortTodos

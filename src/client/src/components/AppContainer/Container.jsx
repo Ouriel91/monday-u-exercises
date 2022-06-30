@@ -6,7 +6,7 @@ import Input from '../Input/Input'
 import EmptyTodosShow from '../EmptyTodosShow/EmptyTodosShow'
 import TodoList from '../TodoList/TodoList'
 import Bottom from '../Bottom/Bottom'
-
+import PropTypes from "prop-types";
 
 function Container() {
 
@@ -15,8 +15,8 @@ function Container() {
         editTodo, 
         deleteTodo, 
         getTodos, 
-        todos,
-        loader
+        todos = [],
+        loader = false,
     } = useContainer();
 
     return (
@@ -37,6 +37,15 @@ function Container() {
             <Bottom length={todos.length} deleteTodo={deleteTodo}/>
         </div>
     )
+}
+
+Container.propTypes = {
+    loader: PropTypes.bool,
+    todos: PropTypes.array,
+    addTodo: PropTypes.func,
+    deleteTodo: PropTypes.func,
+    editTodo: PropTypes.func,
+    getTodos: PropTypes.func,
 }
 
 export default Container

@@ -1,5 +1,7 @@
 import styles from './Switch.module.css'
 import useFilterTodos from './useFilterTodos'
+import PropTypes from "prop-types";
+
 function FilterTodos({getTodos}) {
   
   const {handleDoneUndone} = useFilterTodos(getTodos)
@@ -10,6 +12,10 @@ function FilterTodos({getTodos}) {
       <span className={[styles.slider, styles.round].join(' ')}></span>
     </label>
   )
+}
+
+FilterTodos.propTypes = {
+  getTodos: PropTypes.func
 }
 
 export default FilterTodos

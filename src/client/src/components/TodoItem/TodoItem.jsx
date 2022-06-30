@@ -2,8 +2,9 @@ import useTodoItem from './useTodoItem'
 import styles from './TodoItem.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
+import PropTypes from "prop-types";
 
-function TodoItem({todo, deleteTodo, editTodo}) {
+function TodoItem({todo = {}, deleteTodo, editTodo}) {
   
   const {
     handleEditValue, 
@@ -42,6 +43,15 @@ function TodoItem({todo, deleteTodo, editTodo}) {
         
       </li>
   )
+}
+
+TodoItem.propTypes = {
+  todo: PropTypes.object.isRequired,
+  deleteTodo: PropTypes.func,
+  editTodo: PropTypes.func,
+  handleEditValue: PropTypes.func, 
+  handleDelete: PropTypes.func, 
+  handleEditCheck: PropTypes.func
 }
 
 export default TodoItem
