@@ -1,13 +1,18 @@
 import {useState} from 'react'
+import { useAlert } from 'react-alert'
 
 function useInput(addTodo) {
 
     const [textInput, setTextInput] = useState('')
+    const alert = useAlert()
 
     const handleAddTodo = () => {
 
         if(textInput.trim() === '') {
-            alert('Todo can not be empty')
+            alert.show('Todo can not be empty', {
+                timeout: 2000,
+                type: 'error',
+            })
             return
         }
 

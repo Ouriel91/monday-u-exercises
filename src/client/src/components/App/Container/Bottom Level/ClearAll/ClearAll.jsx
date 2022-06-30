@@ -1,5 +1,5 @@
 import styles from './ClearAll.module.css'
-import anotherStyles from '../AppContainer/Container.module.css'
+import anotherStyles from '../../Container.module.css'
 import PropTypes from "prop-types";
 
 function ClearAll({deleteTodo, length = 0}) {

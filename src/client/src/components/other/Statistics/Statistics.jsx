@@ -1,5 +1,5 @@
 import React from 'react'
-import ItemClient from '../server-api/item-client';
+import ItemClient from '../../../server-api/item-client';
 import {useState} from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
@@ -16,7 +16,7 @@ function Statistics() {
         labels: ['Undone','Done'],
         datasets: [
           {
-            label: '# of Votes',
+            label: '# of Tasks',
             data: [undoneTodos, doneTodos],
             backgroundColor: [
               'red',
@@ -45,7 +45,7 @@ function Statistics() {
 
     return (
         <div>
-            <div style={{width: "200px", height: "200px"}}><Pie data={data} /></div>
+            <div style={{width: "500px", height: "500px"}}><Pie data={data} /></div>
         </div>
     )
 }

@@ -1,10 +1,10 @@
 import './App.css';
-import Container from './components/AppContainer/Container';
+import Container from './components/App/Container/Container';
 import { Tab, TabList } from "monday-ui-react-core";
 import "monday-ui-react-core/dist/main.css"
 import { Routes, Route, useNavigate } from "react-router-dom";
-import About from './components/About';
-import Statistics from './components/Statistics'
+import About from './components/other/About/About';
+import Statistics from './components/other/Statistics/Statistics'
 
 function App() {
   const navigate = useNavigate ();

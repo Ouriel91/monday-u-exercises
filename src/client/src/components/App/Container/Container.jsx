@@ -1,11 +1,11 @@
 import useContainer from './useContainer'
 import styles from './Container.module.css';
-import Top from '../Top/Top'
-import Loader from '../Loader/Loader'
-import Input from '../Input/Input'
-import EmptyTodosShow from '../EmptyTodosShow/EmptyTodosShow'
-import TodoList from '../TodoList/TodoList'
-import Bottom from '../Bottom/Bottom'
+import Top from './Top Level/Top/Top'
+import Loader from './Main Level/Loader/Loader'
+import Input from './Main Level/Input/Input'
+import EmptyTodosShow from './Main Level/EmptyTodosShow/EmptyTodosShow'
+import TodoList from './Main Level/TodoList/TodoList'
+import Bottom from './Bottom Level/Bottom/Bottom'
 import PropTypes from "prop-types";
 
 function Container() {

@@ -1,7 +1,7 @@
 import useInput from './useInput'
 
 import styles from './Input.module.css'
-import anotherStyles from '../AppContainer/Container.module.css'
+import anotherStyles from '../../Container.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from "prop-types";

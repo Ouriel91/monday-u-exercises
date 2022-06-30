@@ -1,13 +1,13 @@
 import styles from './Top.module.css';
-import FilterTodos from '../FilterTodos/FilterTodos'
-import SortTodos from '../SortTodos/SortTodos'
+import FilterTodos from '../../Top Level/FilterTodos/FilterTodos'
+import SortTodos from '../../Top Level/SortTodos/SortTodos'
 import PropTypes from "prop-types";
+import Title from '../Title/Title'
 
 function Top({getTodos}) {
   return (
     <div className={styles.top}>
-        <div className={styles.title}>PokeDoList</div>
-        <p style={{width: '10%'}}>undone/done</p>
+        <Title />
         <FilterTodos getTodos={getTodos}/>
         <SortTodos getTodos={getTodos}/>
     </div>
