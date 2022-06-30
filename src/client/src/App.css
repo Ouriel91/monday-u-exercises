@@ -13,3 +13,11 @@ body {
     background: linear-gradient(to bottom, #68EACC 0%, #497BE8 100%);
     font-family: 'Poppins', sans-serif;
 }
+
+.tabs {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+}

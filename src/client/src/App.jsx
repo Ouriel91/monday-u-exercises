@@ -3,7 +3,7 @@ import Container from './components/App/Container/Container';
 import { Tab, TabList } from "monday-ui-react-core";
 import "monday-ui-react-core/dist/main.css"
 import { Routes, Route, useNavigate } from "react-router-dom";
-import About from './components/other/About/About';
+import About from './components/other/About/Container';
 import Statistics from './components/other/Statistics/Statistics'
 
 function App() {
@@ -18,17 +18,19 @@ function App() {
           <Route path="stats" element={<Statistics />} />
         </Routes>
 
-        <TabList>
-          <Tab onClick={() => navigate('/')}>
-            App
-          </Tab>
-          <Tab onClick={() => navigate('stats')}>
-            Statistics
-          </Tab>
-          <Tab onClick={() => navigate('about')}>
-            About
-          </Tab>
-        </TabList>
+        <div className="tabs">
+          <TabList>
+            <Tab onClick={() => navigate('/')}>
+              App
+            </Tab>
+            <Tab onClick={() => navigate('stats')}>
+              Statistics
+            </Tab>
+            <Tab onClick={() => navigate('about')}>
+              About
+            </Tab>
+          </TabList>
+        </div>
           
       </div>
   );
