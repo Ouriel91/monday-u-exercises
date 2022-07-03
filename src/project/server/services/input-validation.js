@@ -11,8 +11,8 @@ module.exports = function inputValidator(trimValue){
     const singleWordPattern = trimValue.match(singleWord)
     const multiNumberPattern = trimValue.match(multiNumbersSeparatedWithComma)
 
-    return  singleWordPattern !== null || 
-            singleNumberPattern !== null || 
-            multiNumberPattern !== null || 
-            partOfNumbersSeprateWithComma !== null
+    return  singleWordPattern || 
+            singleNumberPattern  || 
+            multiNumberPattern || 
+            partOfNumbersSeprateWithComma 
 }

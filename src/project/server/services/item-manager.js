@@ -3,6 +3,8 @@ const handleAddSingleOrMultiPokemonsTodo = require('./pokemon-helpers.js')
 const {Todos}  = require('../db/models')
 const addTodoData = require('./add-todo-data.js')
 const inputValidator  = require("./input-validation.js")
+const sanitize = require('./sanitize.js')
+const sortObj = require('./consts.js')
 
 module.exports = class ItemManager {
     constructor(main){
@@ -11,8 +13,13 @@ module.exports = class ItemManager {
     }
 
     async addTodo(enterValue){
-        const trimValue = ItemManager.sanitize(enterValue)
-        if(trimValue === "") return
+        const trimValue = sanitize(enterValue)
+        if(trimValue === "") {
+            const error = new Error()
+            error.statusCode = 400
+            error.message = "failed to add todo"
+            throw error
+        }
 
         await this.handleInputToAdd(trimValue)
     }
@@ -27,14 +34,15 @@ module.exports = class ItemManager {
         }
     }
 
-    static sanitize(value) {
-        return value.replace(/^\s+|\s+$/g,"");
-    }
-
     async deleteTodo(id) {
         const removedTodo = await Todos.findOne({where:{id}})
 
-        if(!removedTodo) return null;
+        if(!removedTodo) {
+            const error = new Error()
+            error.statusCode = 404
+            error.message = "Invalid index to delete item"
+            throw error
+        };
         await removedTodo.destroy()
 
         return removedTodo
@@ -47,16 +55,22 @@ module.exports = class ItemManager {
         })
     }
 
-    async orderData(field, orderAction) {
+    async orderData(sort) {
         return await Todos.findAll({
             order:[
-                [field, orderAction]
+                [sortObj[sort].field, sortObj[sort].order]
             ]
         })
     }
 
     async checkUncheckTodo(id, status) {
         const todo = await Todos.findOne({where:{id}})
+        if(!todo) {
+            const error = new Error()
+            error.statusCode = 404
+            error.message = "Invalid index to edit item"
+            throw error
+        }
         todo.status = status  
         todo.done_timestamp = new Date().getTime();
         await todo.save()
@@ -66,13 +80,21 @@ module.exports = class ItemManager {
 
     async editDataInIndex(value, id){
         const todo = await Todos.findOne({where:{id}})
+        if(!todo) {
+            const error = new Error()
+            error.statusCode = 404
+            error.message = "Invalid index to edit item"
+            throw error
+        }
         todo.itemName = value  
         await todo.save()
         
         return todo
     }
 
-    async filterData(status){
+    async filterData(filter){
+        const status = filter === 'checked'
+    
         return await Todos.findAll({
             where:{status}
         })
