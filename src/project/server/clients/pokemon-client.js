@@ -1,5 +1,3 @@
-// The Pokemon Client (using axios) goes here
-
 const axios = require('axios')
 
 const API_BASE = 'https://pokeapi.co/api/v2/pokemon/'

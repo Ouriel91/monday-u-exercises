@@ -1,6 +1,6 @@
-// Define your endpoints here (this is your "controller file")
 const express = require('express');
-const ItemManager = require('../services/item-manager.js')
+const ItemManager = require('../services/buissness-logic/item-manager.js')
+const sortObj = require('../services/utils/consts.js')
 
 const todoRouter = express.Router();
 const itemManager = new ItemManager();
@@ -10,45 +10,37 @@ todoRouter.get('/', async(req, res) => {
     
     let sortedList = [];
 
-    const sortObj = {
-        atoz:{field: 'itemName', order:'ASC'},
-        ztoa:{field: 'itemName', order:'DESC'},
-        dtou:{field: 'status', order:'DESC'},
-        utod:{field: 'status', order:'ASC'},
-    }
-
     if(sort){
-        sortedList = await itemManager.orderData(sortObj[sort].field, sortObj[sort].order)
+        sortedList = await itemManager.orderData(sort)
     }
     else if(filter){
-
-        if(filter === 'checked'){
-            sortedList = await itemManager.filterData(true)
-        }else{
-            sortedList = await itemManager.filterData(false)
-        }
+        sortedList = await itemManager.filterData(filter)
     }
     else{
         sortedList = await itemManager.getTodoList()
     }
-    res.status(200).json(sortedList);
+    return res.status(200).json(sortedList);
 })
 
 todoRouter.post("/", async(req, res) => {
     const {todo} = req.body
+
+    if(!todo){
+        return res.status(400).json({error: "Invalid todo, todo is null"});
+    }
     
     try{
         await itemManager.addTodo(todo)
-        res.status(201).json(todo);
+        return res.status(201).json(todo);
     }
     catch(err){
-        res.status(400).json({error: err.toString()})
+        return res.status(error.statusCode || 500).json({error: err.toString()})
     }
 })
 
 todoRouter.delete('/delete-all', async(req, res) => {
     await itemManager.clearAllTodos()
-    res.status(200).json({});
+    return res.status(200).json({});
 })
 
 todoRouter.delete("/:id", async(req, res) => {
@@ -56,9 +48,9 @@ todoRouter.delete("/:id", async(req, res) => {
 
     try{
         const deletedTodo = await itemManager.deleteTodo(id)
-        res.status(200).json(deletedTodo)
+        return res.status(200).json(deletedTodo)
     }catch (err){
-        res.status(err.statusCode).json({error: err.toString()})
+        return res.status(error.statusCode || 500).json({error: err.toString()})
     }
 
 })
@@ -67,25 +59,18 @@ todoRouter.put("/:id", async(req, res) => {
 
     const id = req.params.id
     const {status, todo} = req.body
-    
-    if(status !== null){
-        
-        try{
-            const updatedTodo = await itemManager.checkUncheckTodo(id, status)
-            res.status(200).json(updatedTodo)
-        }catch(err){
-            res.status(404).json({error: err.toString()})
-        }  
-        return 
-    }
 
-    if(todo !== null){
-        try{
-            const editTodo = await itemManager.editDataInIndex(todo, id)
-            res.status(200).json(editTodo)
-        }catch (err){
-            res.status(404).json({error: err.toString()})
+    try {
+        if(status !== null){
+            const editTodo = await itemManager.checkUncheckTodo(id, status)
+            return res.status(200).json(editTodo)
         }
+        if(todo !== null){
+            const editTodo = await itemManager.editDataInIndex(todo, id)
+            return res.status(200).json(editTodo)
+        }
+    }catch(err){
+        return res.status(err.statusCode || 500).json({error: err.toString()})
     }
 })
 

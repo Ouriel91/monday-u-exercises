@@ -1,8 +1,11 @@
-const PokemonClient =  require("../clients/pokemon-client.js")
+const PokemonClient =  require("../../clients/pokemon-client.js")
 const handleAddSingleOrMultiPokemonsTodo = require('./pokemon-helpers.js')
-const {Todos}  = require('../db/models')
-const addTodoData = require('./add-todo-data.js')
-const inputValidator  = require("./input-validation.js")
+const {Todos}  = require('../../db/models')
+const addTodoData = require('../utils/add-todo-data.js')
+const inputValidator  = require("../utils/input-validation.js")
+const sanitize = require('../utils/sanitize.js')
+const sortObj = require('../utils/consts.js')
+const errorHandler = require('../utils/error-handling.js')
 
 module.exports = class ItemManager {
     constructor(){
@@ -10,8 +13,10 @@ module.exports = class ItemManager {
     }
 
     async addTodo(enterValue){
-        const trimValue = ItemManager.sanitize(enterValue)
-        if(trimValue === "") return
+        const trimValue = sanitize(enterValue)
+        if(trimValue === "") {
+            errorHandler("add todo", 400)
+        }
 
         await this.handleInputToAdd(trimValue)
     }
@@ -26,19 +31,11 @@ module.exports = class ItemManager {
         }
     }
 
-    static sanitize(value) {
-        return value.replace(/^\s+|\s+$/g,"");
-    }
-
     async deleteTodo(id) {
         const removedTodo = await Todos.findOne({where:{id}})
 
         if(!removedTodo) {
-            
-            let error = new Error()
-            error.statusCode = 404
-            error.message = "Invalid index to delete item"
-            throw error
+            errorHandler("delete", 404)
         };
         await removedTodo.destroy()
 
@@ -52,16 +49,21 @@ module.exports = class ItemManager {
         })
     }
 
-    async orderData(field, orderAction) {
+    async orderData(sort) {
         return await Todos.findAll({
             order:[
-                [field, orderAction]
+                [sortObj[sort].field, sortObj[sort].order]
             ]
         })
     }
 
     async checkUncheckTodo(id, status) {
         const todo = await Todos.findOne({where:{id}})
+
+        if(!todo) {
+            errorHandler("edit value", 404)
+        }
+
         todo.status = status  
         todo.done_timestamp = new Date().getTime();
         await todo.save()
@@ -71,13 +73,20 @@ module.exports = class ItemManager {
 
     async editDataInIndex(value, id){
         const todo = await Todos.findOne({where:{id}})
+
+        if(!todo) {
+            errorHandler("edit check", 404)
+        }
+
         todo.itemName = value  
         await todo.save()
         
         return todo
     }
 
-    async filterData(status){
+    async filterData(filter){
+        const status = filter === 'checked'
+        
         return await Todos.findAll({
             where:{status}
         })

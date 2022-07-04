@@ -1,6 +1,6 @@
 const generateUniqueId = require('./generate-unique-id')
-const {Todos}  = require('../db/models')
-//
+const {Todos}  = require('../../db/models')
+
 module.exports = async function addTodoData(value, isPokemon, imagePokemonPath) {
     const id = generateUniqueId()
 
