@@ -74,6 +74,7 @@ export default class Main{
             }
 
             let checked = `<input class="check-todo" id="${todo.id}" type="checkbox">`
+
             if(todo.status){
                 checked = `<input class="check-todo" id="${todo.id}" type="checkbox" checked>`
             }
@@ -125,7 +126,7 @@ export default class Main{
         editItems.forEach((item) => {
             item.addEventListener("click", async() => {
                 const data = item.getAttribute("data-title")
-                
+
                 let value = prompt("change this todo to regular todo", data)
                 if(value === null){
                     return
@@ -176,6 +177,7 @@ export default class Main{
         addTodoButton.classList.remove("active")
     }
 
+
     async editDataInIndex(value, id, status){
         this.loaderActiveDeActive(true)
         const editedData = await this.itemClient.editTodo(id, value, status)
@@ -187,6 +189,7 @@ export default class Main{
 
     async clearAllTodos(){
         const allItemsDeleteRoute = "delete-all" //some recogintion for delete all todos
+
         await this.itemClient.deleteTodo(allItemsDeleteRoute)
         alert("all todos cleared")
         this.showTodos()
