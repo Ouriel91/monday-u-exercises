@@ -1,6 +1,6 @@
 const express = require('express');
-const ItemManager = require('../services/item-manager.js')
-const sortObj = require('../services/consts.js')
+const ItemManager = require('../services/buissness-logic/item-manager.js')
+const sortObj = require('../services/utils/consts.js')
 
 const todoRouter = express.Router();
 const itemManager = new ItemManager();

@@ -1,7 +1,7 @@
-const {Todos}  = require('../db/models')
-const generateUniqueId = require('./generate-unique-id')
-const addTodoData = require('./add-todo-data.js')
-const sanitize = require('./sanitize.js')
+const {Todos}  = require('../../db/models')
+const generateUniqueId = require('../utils/generate-unique-id')
+const addTodoData = require('../utils/add-todo-data.js')
+const sanitize = require('../utils/sanitize.js')
 
 module.exports = async function handleAddSingleOrMultiPokemonsTodo(pokemonClient, enterValue){
 
