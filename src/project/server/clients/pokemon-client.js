@@ -1,11 +1,8 @@
-// The Pokemon Client (using axios) goes here
-
-import fetch from 'node-fetch'
-import axios from 'axios'
+const axios = require('axios')
 
 const API_BASE = 'https://pokeapi.co/api/v2/pokemon/'
 
-export default class PokemonClient{
+module.exports = class PokemonClient{
 
     fetchMulti(pokemonName){
         return new Promise((resolve, reject) => {

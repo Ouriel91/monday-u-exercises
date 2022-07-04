@@ -4,6 +4,7 @@ export default class Main{
     constructor(){
         this.itemClient = new ItemClient()
         this.todoList = []
+        this.query = '';
     }
 
     async showTodos() {
@@ -61,7 +62,7 @@ export default class Main{
 
     async getTotdoList() {
         this.loaderActiveDeActive(true)
-        this.todoList = await this.itemClient.getTodoList()
+        this.todoList = await this.itemClient.getTodoList(this.query)
     }
 
     createListItems(){
@@ -73,14 +74,15 @@ export default class Main{
             }
 
             let checked = `<input class="check-todo" id="${todo.id}" type="checkbox">`
-            if(todo.done){
+
+            if(todo.status){
                 checked = `<input class="check-todo" id="${todo.id}" type="checkbox" checked>`
             }
 
             listItems += 
             `<li class="todo-item">
                 ${checked}
-                <div class="todo-title">${todo.title}</div>
+                <div class="todo-title">${todo.itemName}</div>
                 ${image}
                 <div class="actions">
                     <div>
@@ -89,7 +91,7 @@ export default class Main{
                         </span>
                     </div>
                     <div>
-                        <span class="action-btn edit" data-title="${todo.title}" id=${todo.id}>
+                        <span class="action-btn edit" data-title="${todo.itemName}" id=${todo.id}>
                             <i class="fas fa-edit"></i>
                         </span>
                     </div>
@@ -124,6 +126,7 @@ export default class Main{
         editItems.forEach((item) => {
             item.addEventListener("click", async() => {
                 const data = item.getAttribute("data-title")
+
                 let value = prompt("change this todo to regular todo", data)
                 if(value === null){
                     return
@@ -137,16 +140,16 @@ export default class Main{
         const checkTodos = document.querySelectorAll(".check-todo")
 
         checkTodos.forEach((item) => {
-            item.addEventListener("change", () => {
+            item.addEventListener("change", async() => {
                 const status = item.checked
-                this.changeDoneStatus(item.id, status)     
+                await this.changeDoneStatus(item.id, status)     
             })
         })
     }
 
-    async deleteTodo(id){
+    async deleteTodo(index){
         this.loaderActiveDeActive(true)
-        const removedTodo = await this.itemClient.deleteTodo(id)
+        const removedTodo = await this.itemClient.deleteTodo(index)
         this.loaderActiveDeActive(false)
         this.showTodos()
         alert(`removed new todo ${removedTodo}`) 
@@ -174,36 +177,47 @@ export default class Main{
         addTodoButton.classList.remove("active")
     }
 
-    async editDataInIndex(value, id, status) {
+
+    async editDataInIndex(value, id, status){
         this.loaderActiveDeActive(true)
-        const editedData = await this.itemClient.editTodo(id, value, status)//id, value, status
+        const editedData = await this.itemClient.editTodo(id, value, status)
         this.loaderActiveDeActive(false)
-        alert(`data edited to ${editedData.title}`)
+        
+        alert(`data edited to ${editedData.itemName}`)
         this.showTodos()
     }
 
     async clearAllTodos(){
-        const allItemsDeleteRoute = "all" //some recogintion for delete all todos
+        const allItemsDeleteRoute = "delete-all" //some recogintion for delete all todos
+
         await this.itemClient.deleteTodo(allItemsDeleteRoute)
         alert("all todos cleared")
         this.showTodos()
     }
 
-    sortTodos(value) {
-        this.itemClient.getTodoList(`?sort=${value}`)
-        this.showTodos()
+    async sortTodos(value) {
+        if(value !== ''){
+            this.query = `?sort=${value}`;
+        }
+        else{
+            this.query = ''
+        }
+        this.showTodos();
     }
 
-    changeDoneStatus(id, status) {
-        this.itemClient.editTodo(id,null, status); //id, value, status
+    async changeDoneStatus(id, status) {
+        await this.itemClient.editTodo(id,null, status);
         this.showTodos()
     }
 
     async fileterDoneUndoneTodos(value) {
-        this.loaderActiveDeActive(true)
-        this.todoList = await this.itemClient.getTodoList(`?filter=${value}`)
-        
-        this.createTodoListItems();
+        if(value !== ''){
+            this.query = `?filter=${value}`;
+        }
+        else{
+            this.query = ''
+        }
+        this.showTodos();
     }
 
     loaderActiveDeActive(value){
@@ -257,7 +271,7 @@ function onDOMReady() {
         main.clearAllTodos()
     }) 
     
-    orderSelect.addEventListener('change', (e) => {
+    orderSelect.addEventListener('change',  (e) => {
         main.sortTodos(e.target.value)
     })
 

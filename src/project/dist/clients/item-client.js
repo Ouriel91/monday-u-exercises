@@ -1,5 +1,5 @@
-// Create an ItemClient class here. This is what makes requests to your express server (your own custom API!)
 const SERVER_URL = 'http://localhost:8080/todo'
+
 export default class ItemClient {
 
     async getTodoList(query = ""){
@@ -26,21 +26,23 @@ export default class ItemClient {
             method: 'DELETE'
         })
         const data = await response.json()
-        return data.title
-    }
-    
-    async editTodo(id, value, status) {
 
-        const response = await fetch(`${SERVER_URL}/${id}`,{
+        return data.itemName
+    }
+
+    async editTodo(id, value, status){
+        const response = await fetch(`${SERVER_URL}/${id}`, 
+        {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({todo: value, status})
         })
-
+        
         const data = await response.json()
+
         return data
-    }    
+    }
 }
 

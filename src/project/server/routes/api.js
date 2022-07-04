@@ -1,127 +1,80 @@
-// Define your endpoints here (this is your "controller file")
-import express from 'express';
-import ItemManager from '../services/item-manager.js'
+const express = require('express');
+const ItemManager = require('../services/buissness-logic/item-manager.js')
+const sortObj = require('../services/utils/consts.js')
 
 const todoRouter = express.Router();
 const itemManager = new ItemManager();
 
-todoRouter.get('/', (req, res) => {
+todoRouter.get('/', async(req, res) => {
     const {sort, filter} = req.query;
-
-    const ATOZ = 'atoz'
-    const ZTOA = 'ztoa'
-    const DTOU = 'dtou'
-    const UTOD = 'utod'
     
+    let sortedList = [];
+
     if(sort){
-        if(sort === ATOZ){
-            itemManager.orderDataAlphabetically()
-        }else if (sort === ZTOA){
-            itemManager.orderDataAlphabeticallyReverse()
-        }
-        else if (sort === DTOU){
-            itemManager.orderDoneToUnDone()
-        }
-        else if (sort === UTOD){
-            itemManager.orderUnDoneToDone()
-        }
-        
-        res.status(200).json({});
-        return
+        sortedList = await itemManager.orderData(sort)
+    }
+    else if(filter){
+        sortedList = await itemManager.filterData(filter)
+    }
+    else{
+        sortedList = await itemManager.getTodoList()
     }
 
-    if(filter){
-
-        const data = itemManager.getTodoList()
-        let filteteredData = [];
-
-        if(filter === 'checked'){
-            filteteredData = data.filter(t => t.done === true);
-        }else{
-            filteteredData = data.filter(t => t.done === false);
-        }
-
-        res.status(200).json(filteteredData);
-        return
-    }
-    
-    const data = itemManager.getTodoList()
-    res.status(200).json(data);
+    return res.status(200).json(sortedList);
 })
 
 todoRouter.post("/", async(req, res) => {
     const {todo} = req.body
-    let error = new Error()
     
     if(!todo){
-        error.statusCode = 400
-        error.message = "Invalid todo, todo is null"
-        throw error
+        return res.status(400).json({error: "Invalid todo, todo is null"});
     }
     
     try{
         await itemManager.addTodo(todo)
-        res.status(201).json(todo);
+        return res.status(201).json(todo);
     }
     catch(error){
-        error.statusCode = 400
-        error.message = "failed to add todo"
-        throw error
+        return res.status(error.statusCode || 500).json({error: err.toString()})
     }
 })
 
-todoRouter.delete('/all', (req, res) => {
-    itemManager.clearAllTodos()
-    res.status(200).json({});
+todoRouter.delete('/delete-all', async(req, res) => {
+    await itemManager.clearAllTodos()
+    return res.status(200).json({});
 })
 
-todoRouter.delete("/:id", (req, res) => {
+todoRouter.delete("/:id", async(req, res) => {
     const id = req.params.id
 
     try{
-        const deletedTodo = itemManager.deleteTodo(id)
-        res.status(200).json(deletedTodo)
-    }catch(err){
-        res.status(404).json({error: err.toString()})
+        const deletedTodo = await itemManager.deleteTodo(id)
+        return res.status(200).json(deletedTodo)
+    }catch(error){
+        return res.status(error.statusCode || 500).json({error: err.toString()})
     }
+
 })
 
-todoRouter.put("/:id", (req, res) => {
+todoRouter.put("/:id", async(req, res) => {
 
     const id = req.params.id
     const {status, todo} = req.body
 
-    if(status !== null){
-        
-        if(status){
-            try{
-                itemManager.checkTodo(id)
-                res.status(200).json({})
-            }catch(err){
-                res.status(404).json({error: err.toString()})
-            }
+    try {
+
+        if(status !== null){
+            await itemManager.checkUncheckTodo(id, status)
+            return res.status(200).json({})
         }
-        else{
-            try{
-                itemManager.uncheckTodo(id)
-                res.status(200).json({})
-            }catch(err){
-                res.status(404).json({error: err.toString()})
-            }
+        if(todo !== null){
+            const editTodo = await itemManager.editDataInIndex(todo, id)
+            return res.status(200).json(editTodo)
         }
-        return 
+    }catch(err){
+        return res.status(err.statusCode || 500).json({error: err.toString()})
     }
 
-    if(todo !== null){
-        try{
-            const editTodo = itemManager.editDataInIndex(todo, id)
-            res.status(200).json(editTodo)
-        }catch (err){
-            res.status(404).json({error: err.toString()})
-        }
-    }
-  
 })
 
-
-export default todoRouter;
+module.exports = todoRouter;
