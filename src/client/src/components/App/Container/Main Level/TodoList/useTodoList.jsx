@@ -1,11 +1,9 @@
 import TodoItem from '../TodoItem/TodoItem'
 
-function useTodoList(todos, deleteTodo, editTodo) {
+function useTodoList(todos) {
     const renderItems = todos.map(todo => <TodoItem 
         key={todo.id} 
-        todo={todo}
-        deleteTodo={deleteTodo}
-        editTodo={editTodo}/>)  
+        todo={todo}/>)  
 
   return {renderItems}
 }

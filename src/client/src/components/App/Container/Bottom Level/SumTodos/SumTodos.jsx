@@ -1,7 +1,10 @@
 import styles from './SumTodos.module.css'
-import PropTypes from "prop-types";
+import useSumTods from './useSumTods'
 
-function SumTodos({length = 0}) {
+function SumTodos() {
+
+  const {length} = useSumTods()
+  
   return (
     <span className={styles.todosCount}>
       You have {length} pending tasks
@@ -9,8 +12,5 @@ function SumTodos({length = 0}) {
   )
 }
 
-SumTodos.propTypes = {
-  length: PropTypes.number
-}
 
 export default SumTodos

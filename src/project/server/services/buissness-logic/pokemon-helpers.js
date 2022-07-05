@@ -11,6 +11,7 @@ module.exports = async function handleAddSingleOrMultiPokemonsTodo(pokemonClient
         for(let i = 0; i < split.length; i++){
             pokemonArr.push(pokemonClient.fetchMulti(sanitize(split[i])))
         }
+        
         return await handleAddMultiPokemonsTodo(pokemonClient, pokemonArr)
     }
     else {
@@ -19,12 +20,13 @@ module.exports = async function handleAddSingleOrMultiPokemonsTodo(pokemonClient
 }
 
 async function handleAddMultiPokemonsTodo(pokemonClient, pokemonArr){
-
     return Promise.all(pokemonArr)
         .then(async (response) => {
+            const multipleArr = []
             for(let i = 0; i < response.length; i++){
                 return await addMultiplePokemonsTodo(response[i], pokemonClient)
             }
+            return multipleArr
     }).catch(async(error) => {
         console.log(error)
         return await addFailToLoadPokemonsTodo(pokemonArr)

@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from "prop-types";
 
-function Input({addTodo}) {
+function Input() {
   
   const {
     textInput = '', 
     setTextInput, 
     handleAddTodo, 
     handleAddTodoWithEnter
-  } = useInput(addTodo)
+  } = useInput()
   
   return (
     <div className={styles.inputContainer}>

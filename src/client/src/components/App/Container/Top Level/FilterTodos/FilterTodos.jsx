@@ -2,9 +2,9 @@ import styles from './Switch.module.css'
 import useFilterTodos from './useFilterTodos'
 import PropTypes from "prop-types";
 
-function FilterTodos({getTodos}) {
+function FilterTodos() {
   
-  const {handleDoneUndone} = useFilterTodos(getTodos)
+  const {handleDoneUndone} = useFilterTodos()
 
   return (
     <div style={{width: '10%'}}>

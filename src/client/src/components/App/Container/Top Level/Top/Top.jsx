@@ -4,12 +4,12 @@ import SortTodos from '../../Top Level/SortTodos/SortTodos'
 import PropTypes from "prop-types";
 import Title from '../Title/Title'
 
-function Top({getTodos}) {
+function Top() {
   return (
     <div className={styles.top}>
         <Title />
-        <FilterTodos getTodos={getTodos}/>
-        <SortTodos getTodos={getTodos}/>
+        <FilterTodos />
+        <SortTodos />
     </div>
   )
 }

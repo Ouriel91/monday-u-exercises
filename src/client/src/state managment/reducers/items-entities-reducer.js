@@ -6,31 +6,29 @@ const itemsEntitiesReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case actionTypes.GET_TODOLIST:
-      state.todos = action.todos;
-      break;
+      return {...state, todos: action.todos}
     case actionTypes.LOADER_UP:
-      state.loader = true;
-      break;   
+      return {...state, loader: true} 
     case actionTypes.LOADER_DOWN:
-      state.loader = false;
-      break;
+      return {...state, loader: false} 
     case actionTypes.ADD_TODO:
-      state.todos.push(action.item)
-      break;
+      const cpyTodosAdd = [...state.todos]
+      cpyTodosAdd.push(action.item)
+      return {...state, todo: cpyTodosAdd}
     case actionTypes.DELETE_TODO:
-      const deleteIndex = state.todos.findIndex(item => action.item.id === item.id);
-      state.todos.splice(deleteIndex, 1)
-      break;
+      const cpyTodosDelete = [...state.todos]
+      const deleteIndex = cpyTodosDelete.findIndex(item => action.item.id === item.id);
+      cpyTodosDelete.splice(deleteIndex, 1)
+      return {...state, todo: cpyTodosDelete}
     case actionTypes.EDIT_TODO:
-      const editedIndex = state.todos.findIndex(item => action.item.id === item.id);
-      state.todos[editedIndex] = action.item;
-      break;
+      const cpyTodosEdit = [...state.todos]
+      const editedIndex = cpyTodosEdit.findIndex(item => action.item.id === item.id);
+      cpyTodosEdit[editedIndex] = action.item;
+      return {...state, todo: cpyTodosEdit}
 
     default:
       return state;
   }
-
-  return state;
 };
 
 export default itemsEntitiesReducer;

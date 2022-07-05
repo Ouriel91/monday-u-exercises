@@ -30,10 +30,10 @@ const loaderDownAction = () => ({
     type: actionsTypes.LOADER_DOWN
 })
 
-export const getTodos = () => {
+export const getTodos = (query = "") => {
     return async dispatch => {
         dispatch(loaderUpAction())
-        const data = await itemClient.getTodoList()
+        const data = await itemClient.getTodoList(query)
         dispatch(getTodoListAction(data))
         dispatch(loaderDownAction())
     }
@@ -45,6 +45,7 @@ export const addTodo = (value) => {
     const addedTodo = await itemClient.addTodo(value)
     dispatch(addTodoAction(addedTodo));
     dispatch(loaderDownAction())
+    return addedTodo
   };
 };
 
@@ -54,6 +55,7 @@ export const deleteTodo = (id) => {
         const deletedTodo = await itemClient.deleteTodo(id)
         dispatch(deleteTodoAction(deletedTodo));
         dispatch(loaderDownAction())
+        return deletedTodo
     }
 }
 
@@ -63,6 +65,7 @@ export const editTodo = (id, value, status) => {
         const editedTodo = await itemClient.editTodo(id, value, status)
         dispatch(editTodoAction(editedTodo));
         dispatch(loaderDownAction())
+        return editedTodo
     }
 }
 

@@ -1,12 +1,15 @@
 import {useState} from 'react'
 import { useAlert } from 'react-alert'
+import {useDispatch} from 'react-redux'
+import {addTodo} from '../../../../../state managment/actions/todo-actions'
 
-function useInput(addTodo) {
+function useInput() {
 
     const [textInput, setTextInput] = useState('')
     const alert = useAlert()
+    const dispatch = useDispatch()
 
-    const handleAddTodo = () => {
+    const handleAddTodo = async() => {
 
         if(textInput.trim() === '') {
             alert.show('Todo can not be empty', {
@@ -16,7 +19,11 @@ function useInput(addTodo) {
             return
         }
 
-        addTodo(textInput)
+        const addedTodo = await dispatch(addTodo(textInput))
+        alert.show(`Added new todo ${addedTodo.itemName}`, {
+            timeout: 2000,
+            type: 'success',
+        })
         setTextInput('')
     }
 

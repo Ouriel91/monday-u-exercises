@@ -1,11 +1,16 @@
-function useFilterTodos(getTodos) {
+import {useDispatch} from 'react-redux'
+import {getTodos} from '../../../../../state managment/actions/todo-actions'
+
+function useFilterTodos() {
     
+    const dispatch = useDispatch(getTodos)
+
     const handleDoneUndone = (e) => {
         if(e.target.checked){
-            getTodos(`?filter=checked`)
+             dispatch(getTodos(`?filter=checked`))
         }
         else{
-            getTodos(`?filter=unchecked`)
+             dispatch(getTodos(`?filter=unchecked`))
         }
     }
     
