@@ -18,16 +18,16 @@ module.exports = class ItemManager {
             errorHandler("add todo", 400)
         }
 
-        await this.handleInputToAdd(trimValue)
+        return await this.handleInputToAdd(trimValue)
     }
 
     async handleInputToAdd(trimValue){
     
         if(inputValidator(trimValue)) {
-            await handleAddSingleOrMultiPokemonsTodo(this.pokemonClient, trimValue)
+            return await handleAddSingleOrMultiPokemonsTodo(this.pokemonClient, trimValue)
         }
         else{ //noraml todo
-            await addTodoData(trimValue, false, null)
+            return await addTodoData(trimValue, false, null)
         }
     }
 

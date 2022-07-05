@@ -1,24 +1,30 @@
 import {useEffect, useState} from 'react'
 import ItemClient from '../../../server-api/item-client';
 import { useAlert } from 'react-alert'
+import {useDispatch} from 'react-redux'
+import {getTodos} from '../../../state managment/actions/todo-actions'
+import {useSelector} from 'react-redux'
+import {todosLength} from '../../../state managment/selectors/items-entities-selectors'
 
 function useContainer() {
 
     const [todos, setTodos] = useState([])
     const [loader, setLoader] = useState(false)
     const alert = useAlert()
+    const dispatch = useDispatch()
+    const listLength = useSelector(todosLength)
     
     let count = 0;
     useEffect(() => {
         //prevent from use effect run twice (react 18+)
         if(count < 1)
-            getTodos()
+            dispatch(getTodos())
         count++;
     },[]) // eslint-disable-line
 
     const itemClient = new ItemClient();
 
-    const getTodos = async(query = "") => {
+    const getTodos1 = async(query = "") => {
         setLoader(true);
         const items = await itemClient.getTodoList(query);
         setTodos(items);
@@ -33,7 +39,7 @@ function useContainer() {
             timeout: 2000,
             type: 'success',
         })
-        getTodos()
+        getTodos1()
     }
 
     const deleteTodo = async(id) => {
@@ -55,7 +61,7 @@ function useContainer() {
         }
 
         setLoader(false);
-        getTodos()
+        getTodos1()
     }
 
     const editTodo = async(id, value, status) => {
@@ -76,7 +82,7 @@ function useContainer() {
         }
         
         setLoader(false);
-        getTodos()
+        getTodos1()
     }
 
     return {
@@ -85,7 +91,8 @@ function useContainer() {
         deleteTodo, 
         getTodos, 
         todos, 
-        loader
+        loader,
+        listLength
     }
 }
 

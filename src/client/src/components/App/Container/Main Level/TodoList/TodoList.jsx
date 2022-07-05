@@ -1,10 +1,13 @@
 import styles from './TodoList.module.css'
 import useTodoList from './useTodoList'
 import PropTypes from "prop-types";
+import {todos} from '../../../../../state managment/selectors/items-entities-selectors'
+import {useSelector} from "react-redux"
 
-function TodoList({todos = [], deleteTodo, editTodo}) {
+function TodoList({deleteTodo, editTodo}) {
   
-  const {renderItems} = useTodoList(todos, deleteTodo, editTodo)
+  const todosArr = useSelector(todos)
+  const {renderItems} = useTodoList(todosArr, deleteTodo, editTodo)
   
   return (
     <ul className={styles.todoListContainer}>
@@ -14,7 +17,6 @@ function TodoList({todos = [], deleteTodo, editTodo}) {
 }
 
 TodoList.propTypes = {
-  todos: PropTypes.array.isRequired,
   renderItems: PropTypes.array,
   deleteTodo: PropTypes.func, 
   editTodo: PropTypes.func

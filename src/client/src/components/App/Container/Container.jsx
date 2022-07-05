@@ -17,6 +17,7 @@ function Container() {
         getTodos, 
         todos = [],
         loader = false,
+        listLength
     } = useContainer();
 
     return (
@@ -26,9 +27,8 @@ function Container() {
             {loader ? <Loader /> : null}
             <Input addTodo={addTodo}/>
             {
-            todos.length > 0 ? 
+            listLength > 0 ? 
                 <TodoList 
-                    todos={todos}
                     deleteTodo={deleteTodo}
                     editTodo={editTodo}/> 
                 : 
