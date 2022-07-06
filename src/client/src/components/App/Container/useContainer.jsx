@@ -1,7 +1,6 @@
 import {useEffect} from 'react'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import {todosLength, loader} from '../../../state managment/selectors/items-entities-selectors'
-import {useDispatch} from 'react-redux'
 import {getTodos} from '../../../state managment/actions/todo-actions'
 
 function useContainer() {
@@ -16,7 +15,7 @@ function useContainer() {
         if(count < 1)
             dispatch(getTodos())
         count++;
-    },[]) // eslint-disable-line
+    },[dispatch, count]); 
 
     return {listLength, isLoading}
 }

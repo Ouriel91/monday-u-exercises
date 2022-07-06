@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { useAlert } from 'react-alert'
 import {useDispatch} from 'react-redux'
-import {addTodo} from '../../../../../state managment/actions/todo-actions'
+import {addTodo, getTodos} from '../../../../../state managment/actions/todo-actions'
 
 function useInput() {
 
@@ -24,6 +24,7 @@ function useInput() {
             timeout: 2000,
             type: 'success',
         })
+        dispatch(getTodos())
         setTextInput('')
     }
 

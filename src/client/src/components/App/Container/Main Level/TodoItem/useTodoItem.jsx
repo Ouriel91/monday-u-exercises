@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux'
-import {editTodo, deleteTodo} from '../../../../../state managment/actions/todo-actions'
+import {editTodo, deleteTodo, getTodos} from '../../../../../state managment/actions/todo-actions'
 import { useAlert } from 'react-alert'
 
 function useTodoItem() {
@@ -12,6 +12,7 @@ function useTodoItem() {
             timeout: 2000,
             type: 'info',
         })
+        dispatch(getTodos())
     }
     
     const handleEditValue = async(todo) => {
@@ -23,6 +24,7 @@ function useTodoItem() {
             timeout: 2000,
             type: 'info',
         })
+        dispatch(getTodos())
     }
     
     const handleDelete = async(todo) => {
@@ -31,6 +33,7 @@ function useTodoItem() {
             timeout: 2000,
             type: 'error',
         })
+        dispatch(getTodos())
     }
 
     return {handleEditValue, handleDelete, handleEditCheck}
