@@ -3,8 +3,8 @@ import {getTodos} from '../../../../../state managment/actions/todo-actions'
 
 function useSortTodos() {
     const dispatch = useDispatch()
-    const handleSorts = async(e) => {
-        await dispatch(getTodos(`?sort=${e.target.value}`))
+    const handleSorts = (e) => {
+        dispatch(getTodos(`?sort=${e.target.value}`))
     }
 
     return {handleSorts}

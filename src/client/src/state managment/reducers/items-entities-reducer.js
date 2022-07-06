@@ -25,6 +25,8 @@ const itemsEntitiesReducer = (state = initialState, action) => {
       const editedIndex = cpyTodosEdit.findIndex(item => action.item.id === item.id);
       cpyTodosEdit[editedIndex] = action.item;
       return {...state, todo: cpyTodosEdit}
+    case actionTypes.CLEAR_ALL:
+      return {...state, todos:[]}
 
     default:
       return state;

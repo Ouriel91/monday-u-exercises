@@ -12,8 +12,9 @@ function useContainer() {
     let count = 0;
     useEffect(() => {
         //prevent from use effect run twice (react 18+)
-        if(count < 1)
+        if(count < 1){
             dispatch(getTodos())
+        }
         count++;
     },[dispatch, count]); 
 

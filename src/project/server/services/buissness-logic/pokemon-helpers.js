@@ -24,7 +24,8 @@ async function handleAddMultiPokemonsTodo(pokemonClient, pokemonArr){
         .then(async (response) => {
             const multipleArr = []
             for(let i = 0; i < response.length; i++){
-                return await addMultiplePokemonsTodo(response[i], pokemonClient)
+                const todo = await addMultiplePokemonsTodo(response[i], pokemonClient)
+                multipleArr.push(todo)
             }
             return multipleArr
     }).catch(async(error) => {

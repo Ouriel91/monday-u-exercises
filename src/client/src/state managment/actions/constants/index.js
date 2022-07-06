@@ -6,6 +6,7 @@ const ACTIONS = {
     EDIT_TODO: 'EDIT_TODO',
     LOADER_UP: 'LOADER_UP',
     LOADER_DOWN: 'LOADER_DOWN',
+    CLEAR_ALL: 'CLEAR_ALL',
 
     //view
     SORT_ALL: 'SORT_ALL',

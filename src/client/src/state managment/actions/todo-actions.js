@@ -22,6 +22,10 @@ const deleteTodoAction = (item) => ({
     item: item
 })
 
+const clearAllAction = () => ({
+    type: actionsTypes.CLEAR_ALL,
+})
+
 const loaderUpAction = () => ({
     type: actionsTypes.LOADER_UP
 })
@@ -54,6 +58,9 @@ export const deleteTodo = (id) => {
         dispatch(loaderUpAction())
         const deletedTodo = await itemClient.deleteTodo(id)
         dispatch(deleteTodoAction(deletedTodo));
+        if(id === 'delete-all'){
+            dispatch(clearAllAction())
+        }
         dispatch(loaderDownAction())
         return deletedTodo
     }
@@ -63,6 +70,7 @@ export const editTodo = (id, value, status) => {
     return async dispatch => {
         dispatch(loaderUpAction())
         const editedTodo = await itemClient.editTodo(id, value, status)
+        console.log(editedTodo)
         dispatch(editTodoAction(editedTodo));
         dispatch(loaderDownAction())
         return editedTodo
@@ -78,6 +86,12 @@ export const loaderUp = () => {
 export const loaderDown = () => {
     return dispatch => {
         dispatch(loaderDownAction())
+    }
+}
+
+export const clearAll = () => {
+    return dispatch => {
+        dispatch(clearAllAction())
     }
 }
 

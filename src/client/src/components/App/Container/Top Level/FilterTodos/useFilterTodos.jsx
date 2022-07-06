@@ -3,7 +3,7 @@ import {getTodos} from '../../../../../state managment/actions/todo-actions'
 
 function useFilterTodos() {
     
-    const dispatch = useDispatch(getTodos)
+    const dispatch = useDispatch()
 
     const handleDoneUndone = (e) => {
         if(e.target.checked){
