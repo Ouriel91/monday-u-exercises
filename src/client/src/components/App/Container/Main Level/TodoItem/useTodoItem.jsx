@@ -12,7 +12,6 @@ function useTodoItem() {
             timeout: 2000,
             type: 'info',
         })
-        dispatch(getTodos())
     }
     
     const handleEditValue = async(todo) => {
@@ -24,7 +23,6 @@ function useTodoItem() {
             timeout: 2000,
             type: 'info',
         })
-        dispatch(getTodos())
     }
     
     const handleDelete = async(todo) => {
@@ -33,7 +31,6 @@ function useTodoItem() {
             timeout: 2000,
             type: 'error',
         })
-        dispatch(getTodos())
     }
 
     return {handleEditValue, handleDelete, handleEditCheck}

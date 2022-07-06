@@ -1,6 +1,6 @@
 import actionTypes from "../actions/constants";
 
-const initialState = {todos :[], loader: false};
+const initialState = {todos :[], loader: false, errorMessage: ''};
 
 const itemsEntitiesReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -12,22 +12,29 @@ const itemsEntitiesReducer = (state = initialState, action) => {
     case actionTypes.LOADER_DOWN:
       return {...state, loader: false} 
     case actionTypes.ADD_TODO:
-      const cpyTodosAdd = [...state.todos]
-      cpyTodosAdd.push(action.item)
-      return {...state, todo: cpyTodosAdd}
+      let cpyTodosAdd
+      if(action.item.length){ //multiple items added
+        cpyTodosAdd = [...state.todos, ...action.item]
+      }
+      else{ //single add
+        cpyTodosAdd = [...state.todos, action.item]
+      }
+      
+      return {...state, todos: cpyTodosAdd}
     case actionTypes.DELETE_TODO:
       const cpyTodosDelete = [...state.todos]
       const deleteIndex = cpyTodosDelete.findIndex(item => action.item.id === item.id);
       cpyTodosDelete.splice(deleteIndex, 1)
-      return {...state, todo: cpyTodosDelete}
+      return {...state, todos: cpyTodosDelete}
     case actionTypes.EDIT_TODO:
       const cpyTodosEdit = [...state.todos]
       const editedIndex = cpyTodosEdit.findIndex(item => action.item.id === item.id);
       cpyTodosEdit[editedIndex] = action.item;
-      return {...state, todo: cpyTodosEdit}
+      return {...state, todos: cpyTodosEdit}
     case actionTypes.CLEAR_ALL:
       return {...state, todos:[]}
-
+    case actionTypes.SET_ERROR:
+      return {...state, errorMessage: action.message, loader: false}
     default:
       return state;
   }

@@ -8,14 +8,15 @@ import TodoList from './Main Level/TodoList/TodoList'
 import Bottom from './Bottom Level/Bottom/Bottom'
 import useContainer from './useContainer'
 
+
 function Container() {
 
-    const {listLength, isLoading} = useContainer()
-    
+    const {listLength, isLoading, error} = useContainer()
+ 
     return (
         <div className={styles.container}>
             <Top />
-            
+            {error.length > 0? <p>{error}</p> : null}
             {isLoading ? <Loader /> : null}
             <Input/>
             {listLength > 0 ? <TodoList /> : <EmptyTodosShow />} 

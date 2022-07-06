@@ -3,10 +3,11 @@ const SERVER_URL = 'http://localhost:8080/todo'
 export default class ItemClient {
 
     async getTodoList(query = ""){
+        
         const response = await fetch(`${SERVER_URL}${query}`)
         const data = await response.json()
 
-        return data
+        return data; 
     }
 
     async addTodo(value) {

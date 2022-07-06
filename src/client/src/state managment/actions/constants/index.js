@@ -7,6 +7,7 @@ const ACTIONS = {
     LOADER_UP: 'LOADER_UP',
     LOADER_DOWN: 'LOADER_DOWN',
     CLEAR_ALL: 'CLEAR_ALL',
+    SET_ERROR: 'SET_ERROR',
 
     //view
     SORT_ALL: 'SORT_ALL',

@@ -24,7 +24,7 @@ function useInput() {
             timeout: 2000,
             type: 'success',
         })
-        dispatch(getTodos())
+        
         setTextInput('')
     }
 

@@ -1,13 +1,16 @@
 import {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {todosLength, loader} from '../../../state managment/selectors/items-entities-selectors'
+import {todosLength, loader, errorMessage} from '../../../state managment/selectors/items-entities-selectors'
 import {getTodos} from '../../../state managment/actions/todo-actions'
+import { useAlert } from 'react-alert'
 
 function useContainer() {
 
     const listLength = useSelector(todosLength)
     const isLoading = useSelector(loader)
+    const error = useSelector(errorMessage)
     const dispatch = useDispatch()
+    const alert = useAlert()
 
     let count = 0;
     useEffect(() => {
@@ -18,7 +21,7 @@ function useContainer() {
         count++;
     },[dispatch, count]); 
 
-    return {listLength, isLoading}
+    return {listLength, isLoading, error, alert}
 }
 
 export default useContainer
