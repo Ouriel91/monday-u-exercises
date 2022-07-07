@@ -6,6 +6,7 @@ import Input from './Main Level/Input/Input'
 import EmptyTodosShow from './Main Level/EmptyTodosShow/EmptyTodosShow'
 import TodoList from './Main Level/TodoList/TodoList'
 import Bottom from './Bottom Level/Bottom/Bottom'
+import Errors from './Errors/Errors'
 import useContainer from './useContainer'
 
 
@@ -16,7 +17,7 @@ function Container() {
     return (
         <div className={styles.container}>
             <Top />
-            {error.length > 0? <p>{error}</p> : null}
+            {error.length > 0 ? <Errors error={error} /> : null}
             {isLoading ? <Loader /> : null}
             <Input/>
             {listLength > 0 ? <TodoList /> : <EmptyTodosShow />} 

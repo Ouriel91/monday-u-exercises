@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux'
-import {editTodo, deleteTodo, getTodos} from '../../../../../state managment/actions/todo-actions'
+import {editTodo, deleteTodo} from '../../../../../state managment/actions/todo-actions'
 import { useAlert } from 'react-alert'
 
 function useTodoItem() {
