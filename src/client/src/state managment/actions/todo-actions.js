@@ -38,6 +38,11 @@ const setErrorAction = (error) => ({
     message:error
 })
 
+const searchAction = (value) => ({
+    type: actionsTypes.SEARCH,
+    value: value
+})
+
 export const getTodos = (query = "") => {
     return async dispatch => {
         dispatch(loaderUpAction())
@@ -141,5 +146,10 @@ export const clearAll = () => {
     }
 }
 
+export const search = (value) => {
+    return dispatch => {
+        dispatch(searchAction(value))
+    }
+}
 
 
