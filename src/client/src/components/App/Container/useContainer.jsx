@@ -5,7 +5,7 @@ import { useAlert } from 'react-alert'
 function useContainer() {
 
     const [todos, setTodos] = useState([])
-    const [loader, setLoader] = useState(false)
+    const [isLoading, setLoader] = useState(false)
     const alert = useAlert()
     
     let count = 0;
@@ -85,7 +85,7 @@ function useContainer() {
         deleteTodo, 
         getTodos, 
         todos, 
-        loader
+        isLoading
     }
 }
 

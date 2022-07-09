@@ -2,10 +2,10 @@ import styles from './ClearAll.module.css'
 import anotherStyles from '../../Container.module.css'
 import PropTypes from "prop-types";
 
-function ClearAll({deleteTodo, length = 0}) {
+function ClearAll({deleteTodo, todosLength = 0}) {
   return (
     <button 
-      className={[anotherStyles.button, styles.clearAllButton, length > 0 ? styles.active : ""].join(' ')}
+      className={[anotherStyles.button, styles.clearAllButton, todosLength > 0 ? styles.active : ""].join(' ')}
       onClick={() => deleteTodo('delete-all')}>
         Clear All
     </button>
@@ -13,7 +13,7 @@ function ClearAll({deleteTodo, length = 0}) {
 }
 
 ClearAll.propTypes = {
-  length: PropTypes.number,
+  todosLength: PropTypes.number,
   deleteTodo: PropTypes.func
 }
 

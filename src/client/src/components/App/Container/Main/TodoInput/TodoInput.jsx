@@ -1,12 +1,11 @@
 import useInput from './useInput'
-
-import styles from './Input.module.css'
+import styles from './TodoInput.module.css'
 import anotherStyles from '../../Container.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from "prop-types";
 
-function Input({addTodo}) {
+function TodoInput({addTodo}) {
   
   const {
     textInput = '', 
@@ -35,11 +34,11 @@ function Input({addTodo}) {
   )
 }
 
-Input.propTypes = {
+TodoInput.propTypes = {
   addButton: PropTypes.func,
   setTextInput: PropTypes.func,
   handleAddTodo: PropTypes.func, 
   handleAddTodoWithEnter: PropTypes.func,
 }
 
-export default Input
+export default TodoInput
