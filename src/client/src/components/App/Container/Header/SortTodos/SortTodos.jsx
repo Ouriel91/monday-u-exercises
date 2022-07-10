@@ -1,10 +1,11 @@
 import styles from './SortTodos.module.css'
-import useSortTodos from './useSortTodos'
 import PropTypes from "prop-types";
 
 function SortTodos({getTodos}) {
 
-  const {handleSorts} = useSortTodos(getTodos)
+  const handleSorts = (e) => {
+    getTodos(`?sort=${e.target.value}`)
+  }
 
   return (
     <select className={styles.sort} onChange={handleSorts}>

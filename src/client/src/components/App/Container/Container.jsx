@@ -1,23 +1,91 @@
-import useContainer from './useContainer'
+import {useEffect, useState} from 'react'
+import ItemClient from '../../../server-api/item-client';
+import { useAlert } from 'react-alert'
 import styles from './Container.module.css';
 import Header from './Header/Header/Header'
 import Loader from './Main/Loader/Loader'
 import TodoInput from './Main/TodoInput/TodoInput'
-import EmptyTodosShow from './Main/EmptyTodosShow/EmptyTodosShow'
 import TodoList from './Main/TodoList/TodoList'
-import Footer from './Footer/Footer/Footer'
+import Footer from './Footer/Footer'
 import PropTypes from "prop-types";
 
 function Container() {
 
-    const {
-        addTodo, 
-        editTodo, 
-        deleteTodo, 
-        getTodos, 
-        todos = [],
-        isLoading = false,
-    } = useContainer();
+    const [todos, setTodos] = useState([])
+    const [isLoading, setLoader] = useState(false)
+    const alert = useAlert()
+    
+    let count = 0;
+    useEffect(() => {
+        //prevent from use effect run twice (react 18+)
+        if(count < 1)
+            getTodos()
+        count++;
+    },[]) // eslint-disable-line
+
+    const itemClient = new ItemClient();
+
+    const getTodos = async(query = "") => {
+        setLoader(true);
+        const items = await itemClient.getTodoList(query);
+        setTodos(items);
+        setLoader(false);
+    }
+
+    const addTodo = async(value) => {
+        setLoader(true);
+        await itemClient.addTodo(value);
+        setLoader(false);
+        alert.show('Added new todo', {
+            timeout: 2000,
+            type: 'success',
+        })
+        getTodos()
+    }
+
+    const deleteTodo = async(id) => {
+     
+        setLoader(true);
+
+        const deletedItem = await itemClient.deleteTodo(id);
+        if(deletedItem.id) {
+            alert.show(`delete ${deletedItem.itemName}`, {
+                timeout: 2000,
+                type: 'error',
+            })
+        }
+        else{
+            alert.show('delete all todos', {
+                timeout: 2000,
+                type: 'error',
+            })
+        }
+
+        setLoader(false);
+        getTodos()
+    }
+
+    const editTodo = async(id, value, status) => {
+
+        setLoader(true);
+        const editedTodo = await itemClient.editTodo(id, value, status)
+        if(value !== null){
+            alert.show(`edited item to ${editedTodo.itemName}`, {
+                timeout: 2000,
+                type: 'info',
+            })
+        }
+        else if(status !== null){
+            alert.show(`edited item ${editedTodo.itemName} to ${editedTodo.status ? "done" : "undone"}`, {
+                timeout: 2000,
+                type: 'info',
+            })
+        }
+        
+        setLoader(false);
+        getTodos()
+    }
+
 
     return (
         <div className={styles.container}>
@@ -25,15 +93,10 @@ function Container() {
             
             {isLoading ? <Loader /> : null}
             <TodoInput addTodo={addTodo}/>
-            {
-            todos.length > 0 ? 
-                <TodoList 
-                    todos={todos}
-                    deleteTodo={deleteTodo}
-                    editTodo={editTodo}/> 
-                : 
-                <EmptyTodosShow />
-            } 
+            <TodoList 
+                todos={todos}
+                deleteTodo={deleteTodo}
+                editTodo={editTodo}/>  
             <Footer todosLength={todos.length} deleteTodo={deleteTodo}/>
         </div>
     )

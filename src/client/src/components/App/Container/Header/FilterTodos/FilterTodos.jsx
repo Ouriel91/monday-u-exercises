@@ -1,11 +1,17 @@
-import styles from './Switch.module.css'
-import useFilterTodos from './useFilterTodos'
+import styles from './Filter.module.css'
 import PropTypes from "prop-types";
 
 function FilterTodos({getTodos}) {
   
-  const {handleDoneUndone} = useFilterTodos(getTodos)
-
+  const handleDoneUndone = (e) => {
+      if(e.target.checked){
+          getTodos(`?filter=checked`)
+      }
+      else{
+          getTodos(`?filter=unchecked`)
+      }
+  }
+ 
   return (
     <div style={{width: '10%'}}>
       <p>undone/done</p>
