@@ -1,3 +1,4 @@
+import {memo} from 'react'
 import styles from './Filter.module.css'
 import PropTypes from "prop-types";
 
@@ -27,4 +28,4 @@ FilterTodos.propTypes = {
   getTodos: PropTypes.func
 }
 
-export default FilterTodos
+export default memo(FilterTodos)

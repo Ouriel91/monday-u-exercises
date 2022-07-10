@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback} from 'react'
 import ItemClient from '../../../server-api/item-client';
 import { useAlert } from 'react-alert'
 import styles from './Container.module.css';
@@ -25,14 +25,14 @@ function Container() {
 
     const itemClient = new ItemClient();
 
-    const getTodos = async(query = "") => {
+    const getTodos = useCallback(async(query = "") => {
         setLoader(true);
         const items = await itemClient.getTodoList(query);
         setTodos(items);
         setLoader(false);
-    }
+    },[])// eslint-disable-line
 
-    const addTodo = async(value) => {
+    const addTodo = useCallback(async(value) => {
         setLoader(true);
         await itemClient.addTodo(value);
         setLoader(false);
@@ -41,9 +41,9 @@ function Container() {
             type: 'success',
         })
         getTodos()
-    }
+    },[])// eslint-disable-line
 
-    const deleteTodo = async(id) => {
+    const deleteTodo = useCallback(async(id) => {
      
         setLoader(true);
 
@@ -63,9 +63,9 @@ function Container() {
 
         setLoader(false);
         getTodos()
-    }
+    },[]);// eslint-disable-line
 
-    const editTodo = async(id, value, status) => {
+    const editTodo = useCallback(async(id, value, status) => {
 
         setLoader(true);
         const editedTodo = await itemClient.editTodo(id, value, status)
@@ -84,7 +84,7 @@ function Container() {
         
         setLoader(false);
         getTodos()
-    }
+    },[])// eslint-disable-line
 
 
     return (

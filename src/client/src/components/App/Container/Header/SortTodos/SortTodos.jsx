@@ -1,3 +1,4 @@
+import {memo} from 'react'
 import styles from './SortTodos.module.css'
 import PropTypes from "prop-types";
 
@@ -23,4 +24,4 @@ SortTodos.propTypes = {
   handleSorts: PropTypes.func,
 }
 
-export default SortTodos
+export default memo(SortTodos)

@@ -1,3 +1,4 @@
+import {memo} from 'react'
 import styles from './TodoItem.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
@@ -62,4 +63,4 @@ TodoItem.propTypes = {
   handleEditCheck: PropTypes.func
 }
 
-export default TodoItem
+export default memo(TodoItem)

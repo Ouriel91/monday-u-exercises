@@ -1,18 +1,28 @@
+import {memo} from 'react'
 import styles from './Footer.module.css'
-import anotherStyles from '../Container.module.css'
 import PropTypes from "prop-types";
+import Button from '../../../UI/Button'
 
 function Footer({todosLength = 0, deleteTodo}) {
+
+  const handleDeleteAll = () => {
+    deleteTodo('delete-all')
+  }
+
+  let anotherAddedClasses = ' clearAllButton'
+  if(todosLength > 0 ){
+    anotherAddedClasses += ' active'
+  }
+
   return (
     <div className={styles.bottom}>
         <span className={styles.todosCount}>
           You have {todosLength} pending tasks
         </span>
-        <button 
-          className={[anotherStyles.button, styles.clearAllButton, todosLength > 0 ? styles.active : ""].join(' ')}
-          onClick={() => deleteTodo('delete-all')}>
-            Clear All
-        </button>
+        <Button 
+          clickFunc={handleDeleteAll} 
+          content="Clear All"
+          anotherAddedClasses={anotherAddedClasses}/>
     </div>
   )
 }
@@ -22,4 +32,4 @@ Footer.propTypes = {
   deleteTodo: PropTypes.func
 }
 
-export default Footer
+export default memo(Footer)
