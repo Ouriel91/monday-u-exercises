@@ -1,13 +1,13 @@
 
 import styles from './Container.module.css';
-import Top from './Top Level/Top/Top'
-import Loader from './Main Level/Loader/Loader'
-import Input from './Main Level/Input/Input'
-import EmptyTodosShow from './Main Level/EmptyTodosShow/EmptyTodosShow'
-import TodoList from './Main Level/TodoList/TodoList'
-import Bottom from './Bottom Level/Bottom/Bottom'
+import Header from './Header/Header/Header'
+import Loader from './Main/Loader/Loader'
+import TodoInput from './Main/TodoInput/TodoInput'
+import EmptyTodosShow from './Main/EmptyTodosShow/EmptyTodosShow'
+import TodoList from './Main/TodoList/TodoList'
+import Footer from './Footer/Footer/Footer'
 import Errors from './Errors/Errors'
-import Search from './Main Level/Search/Search'
+import Search from './Main/Search/Search'
 import useContainer from './useContainer'
 
 
@@ -17,13 +17,13 @@ function Container() {
  
     return (
         <div className={styles.container}>
-            <Top />
+            <Header />
             {error.length > 0 ? <Errors error={error} /> : null}
             {isLoading ? <Loader /> : null}
             <Search />
-            <Input/>
+            <TodoInput/>
             {listLength > 0 ? <TodoList /> : <EmptyTodosShow />} 
-            <Bottom />
+            <Footer />
         </div>
     )
 }

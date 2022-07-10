@@ -1,8 +1,8 @@
-import styles from './Bottom.module.css'
+import styles from './Footer.module.css'
 import SumTodos from '../SumTodos/SumTodos'
 import ClearAll from '../ClearAll/ClearAll'
 
-function Bottom() {
+function Footer() {
   return (
     <div className={styles.bottom}>
         <SumTodos/>
@@ -11,4 +11,4 @@ function Bottom() {
   )
 }
 
-export default Bottom
+export default Footer
