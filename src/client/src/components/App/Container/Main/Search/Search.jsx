@@ -10,10 +10,8 @@ function Search() {
 
     const filterTodos = (e) => {
         const input = e.target.value
-
         dispatch(search(input))
     }
-    
     
     return (
         <div className={styles.container}>

@@ -1,18 +1,48 @@
-import useInput from './useInput'
+import {useState} from 'react'
+import { useAlert } from 'react-alert'
+import {useDispatch} from 'react-redux'
+import {addTodo} from '../../../../../state managment/actions/todo-actions'
 import styles from './TodoInput.module.css'
-import anotherStyles from '../../Container.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-import PropTypes from "prop-types";
+import Button from "../../../../UI/Button"
 
 function TodoInput() {
   
-  const {
-    textInput = '', 
-    setTextInput, 
-    handleAddTodo, 
-    handleAddTodoWithEnter
-  } = useInput()
+  const [textInput, setTextInput] = useState('')
+  const alert = useAlert()
+  const dispatch = useDispatch()
+
+  const handleAddTodo = async() => {
+
+      if(textInput.trim() === '') {
+          alert.show('Todo can not be empty', {
+              timeout: 2000,
+              type: 'error',
+          })
+          return
+      }
+
+      await dispatch(addTodo(textInput))
+      alert.show(`Added new todo/s`, {
+          timeout: 2000,
+          type: 'success',
+      })
+
+      setTextInput('')
+  }
+
+  const handleAddTodoWithEnter = (e) => {
+      if(e.key === 'Enter'){
+          handleAddTodo()
+      }
+  }
+
+  const content = <FontAwesomeIcon icon={faPlusCircle} />
+  let anotherAddedClasses = ' addButton'
+  if(textInput.length > 0 ){
+    anotherAddedClasses += ' active'
+  }
   
   return (
     <div className={styles.inputContainer}>
@@ -25,20 +55,12 @@ function TodoInput() {
         }}
         onKeyUp={handleAddTodoWithEnter}
         value={textInput} />
-      <button 
-        className={[anotherStyles.button, styles.addButton, textInput.length > 0 ? styles.active:""].join(' ')}
-        onClick={handleAddTodo}>
-        <FontAwesomeIcon icon={faPlusCircle} />
-      </button>
+      <Button 
+          content={content} 
+          clickFunc={handleAddTodo} 
+          anotherAddedClasses={anotherAddedClasses}/>
     </div>
   )
-}
-
-TodoInput.propTypes = {
-  addButton: PropTypes.func,
-  setTextInput: PropTypes.func,
-  handleAddTodo: PropTypes.func, 
-  handleAddTodoWithEnter: PropTypes.func,
 }
 
 export default TodoInput

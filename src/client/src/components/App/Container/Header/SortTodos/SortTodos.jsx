@@ -1,10 +1,13 @@
 import styles from './SortTodos.module.css'
-import useSortTodos from './useSortTodos'
-import PropTypes from "prop-types";
+import {useDispatch} from 'react-redux'
+import {getTodos} from '../../../../../state managment/actions/todo-actions'
 
 function SortTodos() {
 
-  const {handleSorts} = useSortTodos()
+  const dispatch = useDispatch()
+  const handleSorts = (e) => {
+      dispatch(getTodos(`?sort=${e.target.value}`))
+  }
 
   return (
     <select className={styles.sort} onChange={handleSorts}>
@@ -15,11 +18,6 @@ function SortTodos() {
       <option value="utod">UNDONE-DONE</option>
     </select>
   )
-}
-
-SortTodos.propTypes = {
-  getTodos: PropTypes.func,
-  handleSorts: PropTypes.func,
 }
 
 export default SortTodos

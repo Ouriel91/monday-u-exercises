@@ -1,4 +1,5 @@
-import useStatistics from './useStatistics'
+import ItemClient from '../../../server-api/item-client';
+import {useState} from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import PropTypes from "prop-types";
@@ -8,9 +9,40 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Statistics() {
 
-    const {data = {}, handleStatistics} = useStatistics();
+  const [doneTodos, setDoneTodos] = useState(0)
+  const [undoneTodos, setUndoneTodos] = useState(0)
+
+  const itemClient = new ItemClient();
+  const data = {
+    labels: ['Undone','Done'],
+    datasets: [
+      {
+        label: '# of Tasks',
+        data: [undoneTodos, doneTodos],
+        backgroundColor: [
+          '#3171a8',
+          '#8d5db3',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
+
+  const handleStatistics = async() => {
+    const items = await itemClient.getTodoList();
     
-    handleStatistics()
+    let done = 0
+    items.forEach((item) => {
+        if(item.status === true) {
+            done++
+        }
+    })
+
+    setUndoneTodos(items.length - done)
+    setDoneTodos(done)
+  }
+  
+  handleStatistics()
 
     return (
         <div>

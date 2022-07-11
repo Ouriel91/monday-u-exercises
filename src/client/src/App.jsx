@@ -11,12 +11,6 @@ function App() {
 
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<Container />} />
-        <Route path="about" element={<About />} />
-        <Route path="stats" element={<Statistics />} />
-      </Routes>
-
       <div className="tabs">
         <TabList>
           <Tab onClick={() => navigate("/")}>App</Tab>
@@ -24,6 +18,12 @@ function App() {
           <Tab onClick={() => navigate("about")}>About</Tab>
         </TabList>
       </div>
+      
+      <Routes>
+        <Route path="/" element={<Container />} />
+        <Route path="about" element={<About />} />
+        <Route path="stats" element={<Statistics />} />
+      </Routes>
     </div>
   );
 }
