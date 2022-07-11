@@ -25,7 +25,7 @@ todoRouter.get('/', async(req, res) => {
 
 todoRouter.post("/", async(req, res) => {
     const {todo} = req.body
-    
+
     if(!todo){
         return res.status(400).json({error: "Invalid todo, todo is null"});
     }
@@ -34,7 +34,8 @@ todoRouter.post("/", async(req, res) => {
         await itemManager.addTodo(todo)
         return res.status(201).json(todo);
     }
-    catch(error){
+
+    catch(err){
         return res.status(error.statusCode || 500).json({error: err.toString()})
     }
 })
@@ -50,7 +51,7 @@ todoRouter.delete("/:id", async(req, res) => {
     try{
         const deletedTodo = await itemManager.deleteTodo(id)
         return res.status(200).json(deletedTodo)
-    }catch(error){
+    }catch (err){
         return res.status(error.statusCode || 500).json({error: err.toString()})
     }
 
@@ -62,10 +63,9 @@ todoRouter.put("/:id", async(req, res) => {
     const {status, todo} = req.body
 
     try {
-
         if(status !== null){
-            await itemManager.checkUncheckTodo(id, status)
-            return res.status(200).json({})
+            const editTodo = await itemManager.checkUncheckTodo(id, status)
+            return res.status(200).json(editTodo)
         }
         if(todo !== null){
             const editTodo = await itemManager.editDataInIndex(todo, id)
@@ -74,7 +74,6 @@ todoRouter.put("/:id", async(req, res) => {
     }catch(err){
         return res.status(err.statusCode || 500).json({error: err.toString()})
     }
-
 })
 
 module.exports = todoRouter;

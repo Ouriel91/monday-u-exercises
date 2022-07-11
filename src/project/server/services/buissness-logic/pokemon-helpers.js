@@ -1,5 +1,4 @@
 const {Todos}  = require('../../db/models')
-const generateUniqueId = require('../utils/generate-unique-id')
 const addTodoData = require('../utils/add-todo-data.js')
 const sanitize = require('../utils/sanitize.js')
 
@@ -55,3 +54,4 @@ async function handleAddSinglePokemonTodo(pokemonClient, enterValue){
         await addFailToLoadPokemonsTodo(enterValue)
     }   
 }
+

@@ -1,0 +1,14 @@
+.sort {
+    width: 10%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: rgba(182, 128, 191, 0.3);
+    text-align: center;
+}
+
+.sort:focus{
+    outline: none;
+}

@@ -8,9 +8,8 @@ const sortObj = require('../utils/consts.js')
 const errorHandler = require('../utils/error-handling.js')
 
 module.exports = class ItemManager {
-    constructor(main){
+    constructor(){
         this.pokemonClient = new PokemonClient()
-        this.main = main;
     }
 
     async addTodo(enterValue){
@@ -60,9 +59,11 @@ module.exports = class ItemManager {
 
     async checkUncheckTodo(id, status) {
         const todo = await Todos.findOne({where:{id}})
+
         if(!todo) {
             errorHandler("edit value", 404)
         }
+
         todo.status = status  
         todo.done_timestamp = new Date().getTime();
         await todo.save()
@@ -85,7 +86,7 @@ module.exports = class ItemManager {
 
     async filterData(filter){
         const status = filter === 'checked'
-    
+        
         return await Todos.findAll({
             where:{status}
         })

@@ -1,0 +1,21 @@
+.container {
+  margin: 0 auto;
+  padding: 0;
+  height: 80vh;
+  width: 20vw;
+  border-radius: 20px;
+  background-color: #23252C;
+}
+  
+@media (max-width: 600px) {
+  .container{
+    width: 300px;
+  }
+}
+  
+@media only screen and (min-width: 600px) and (max-width: 1200px) {
+  .container{
+    width: 350px;
+  }
+}
+  
