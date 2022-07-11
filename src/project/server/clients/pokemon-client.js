@@ -12,6 +12,7 @@ module.exports = class PokemonClient{
                         resolve(response.data)
                     }
                     else{
+                        console.log("here else")
                         reject(response)
                     }
                 })
