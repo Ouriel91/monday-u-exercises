@@ -2,35 +2,35 @@ import actionsTypes from "./constants";
 import ItemClient from "../../server-api/item-client";
 const itemClient = new ItemClient()
 
-const getTodoListAction = (todos) => ({
+export const getTodoListAction = (todos) => ({
     type: actionsTypes.GET_TODOLIST,
     todos: todos
 })
 
-const addTodoAction = (item) => ({
+export const addTodoAction = (item) => ({
   type: actionsTypes.ADD_TODO,
   item: item
 });
 
-const editTodoAction = (item) => ({
+export const editTodoAction = (item) => ({
     type: actionsTypes.EDIT_TODO,
     item: item
 })
 
-const deleteTodoAction = (item) => ({
+export const deleteTodoAction = (item) => ({
     type: actionsTypes.DELETE_TODO,
     item: item
 })
 
-const clearAllAction = () => ({
+export const clearAllAction = () => ({
     type: actionsTypes.CLEAR_ALL,
 })
 
-const loaderUpAction = () => ({
+export const loaderUpAction = () => ({
     type: actionsTypes.LOADER_UP
 })
 
-const loaderDownAction = () => ({
+export const loaderDownAction = () => ({
     type: actionsTypes.LOADER_DOWN
 })
 const setErrorAction = (error) => ({
@@ -38,7 +38,7 @@ const setErrorAction = (error) => ({
     message:error
 })
 
-const searchAction = (value) => ({
+export const searchAction = (value) => ({
     type: actionsTypes.SEARCH,
     value: value
 })
