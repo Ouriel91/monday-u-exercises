@@ -30,12 +30,12 @@ describe("ListContainer", () => {
         const dispatch = useDispatch();
         dispatch(addTodoAction(items))
     }
-// optional configuration
-const options = {
-    position: positions.TOP_CENTER,
-    offset: '30px',
-    transition: transitions.SCALE
-  }
+    // optional configuration
+    const options = {
+        position: positions.TOP_CENTER,
+        offset: '30px',
+        transition: transitions.SCALE
+    }
     render(
         <AlertProvider template={AlertTemplate} {...options}>
       <Provider store={store}>
