@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { useAlert } from 'react-alert'
 import {useDispatch} from 'react-redux'
-import {addTodo} from '../../../../../state managment/actions/todo-actions'
+import {addTodo} from '../../../../../state-managment/actions/todo-actions'
 import styles from './TodoInput.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'

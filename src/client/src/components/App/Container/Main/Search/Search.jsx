@@ -1,6 +1,6 @@
 import styles from './Search.module.css'
-import {search} from '../../../../../state managment/actions/todo-actions'
-import {searchValue} from '../../../../../state managment/selectors/items-entities-selectors'
+import {search} from '../../../../../state-managment/actions/todo-actions'
+import {searchValue} from '../../../../../state-managment/selectors/items-entities-selectors'
 import {useSelector, useDispatch} from "react-redux"
 
 function Search() {

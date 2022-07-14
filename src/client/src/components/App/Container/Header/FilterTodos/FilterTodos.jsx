@@ -1,6 +1,6 @@
 import styles from './Filter.module.css'
 import {useDispatch} from 'react-redux'
-import {getTodos} from '../../../../../state managment/actions/todo-actions'
+import {getTodos} from '../../../../../state-managment/actions/todo-actions'
 import { useAlert } from 'react-alert'
 
 function FilterTodos() {

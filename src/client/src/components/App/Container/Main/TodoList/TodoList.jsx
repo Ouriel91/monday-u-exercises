@@ -1,7 +1,7 @@
 import styles from './TodoList.module.css'
 import TodoItem from '../TodoItem/TodoItem'
 import EmptyTodosShow from '../EmptyTodosShow/EmptyTodosShow'
-import {todos} from '../../../../../state managment/selectors/items-entities-selectors'
+import {todos} from '../../../../../state-managment/selectors/items-entities-selectors'
 import {useSelector} from "react-redux"
 
 function TodoList() {

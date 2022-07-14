@@ -1,7 +1,7 @@
 import styles from './Footer.module.css'
 import {useSelector, useDispatch} from 'react-redux'
-import {todosLength} from '../../../../state managment/selectors/items-entities-selectors'
-import {deleteTodo} from '../../../../state managment/actions/todo-actions'
+import {todosLength} from '../../../../state-managment/selectors/items-entities-selectors'
+import {deleteTodo} from '../../../../state-managment/actions/todo-actions'
 import { useAlert } from 'react-alert'
 import Button from '../../../UI/Button'
 
