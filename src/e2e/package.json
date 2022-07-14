@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "cypress": "^10.2.0"
+  },
+  "dependencies": {
+    "cypress-wait-until": "^1.7.2"
   }
 }
