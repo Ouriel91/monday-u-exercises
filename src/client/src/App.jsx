@@ -18,7 +18,7 @@ function App() {
           <Tab onClick={() => navigate("about")}>About</Tab>
         </TabList>
       </div>
-      
+
       <Routes>
         <Route path="/" element={<Container />} />
         <Route path="about" element={<About />} />

@@ -30,6 +30,7 @@ export default class ItemClient {
             method: 'DELETE'
         })
         const data = await response.json()
+
         return data
     }
 
@@ -42,6 +43,7 @@ export default class ItemClient {
             },
             body: JSON.stringify({todo: value, status})
         })
+        
         const data = await response.json()
 
         return data

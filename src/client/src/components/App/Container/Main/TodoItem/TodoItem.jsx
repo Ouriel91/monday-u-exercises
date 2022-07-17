@@ -3,35 +3,35 @@ import {editTodo, deleteTodo} from '../../../../../state-managment/actions/todo-
 import { useAlert } from 'react-alert'
 import styles from './TodoItem.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
-import PropTypes from "prop-types";
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons' 
 
 function TodoItem({todo = {}}) {
-  
+
   const dispatch = useDispatch()
   const alert = useAlert()
 
-  const handleEditCheck = async(todo, checkStatus) => {
-      const editedTodo = await dispatch(editTodo(todo.id, null, checkStatus))
+  const handleEditCheck = (todo, checkStatus) => {
+      const editedTodo =  dispatch(editTodo(todo.id, null, checkStatus))
         alert.show(`edited item ${editedTodo.itemName} to ${editedTodo.status ? "done" : "undone"}`, {
           timeout: 2000,
           type: 'info',
       })
   }
   
-  const handleEditValue = async(todo) => {
+  const handleEditValue = (todo) => {
       const value = prompt(`edit ${todo.itemName}`,todo.itemName)
                   
       if(value === null) return
-      const editedTodo = await dispatch(editTodo(todo.id,value, null))
+
+      const editedTodo = dispatch(editTodo(todo.id,value, null))
       alert.show(`edited item to ${editedTodo.itemName}`, {
           timeout: 2000,
           type: 'info',
       })
   }
   
-  const handleDelete = async(todo) => {
-      const deletedItem = await dispatch(deleteTodo(todo.id))
+  const handleDelete = (todo) => {
+      const deletedItem =  dispatch(deleteTodo(todo.id))
       alert.show(`delete ${deletedItem.itemName}`, {
           timeout: 2000,
           type: 'error',
@@ -69,10 +69,6 @@ function TodoItem({todo = {}}) {
         
       </li>
   )
-}
-
-TodoItem.propTypes = {
-  todo: PropTypes.object.isRequired
 }
 
 export default TodoItem
