@@ -1,24 +1,41 @@
-import {memo} from 'react'
+import {useDispatch} from 'react-redux'
+import {editTodo, deleteTodo} from '../../../../../state-managment/actions/todo-actions'
+import { useAlert } from 'react-alert'
 import styles from './TodoItem.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
-import PropTypes from "prop-types";
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons' 
 
-function TodoItem({todo = {}, deleteTodo, editTodo}) {
-  
-  const handleEditCheck = async(todo, checkStatus) => {
-    await editTodo(todo.id, null, checkStatus)
+function TodoItem({todo = {}}) {
+
+  const dispatch = useDispatch()
+  const alert = useAlert()
+
+  const handleEditCheck = (todo, checkStatus) => {
+      const editedTodo =  dispatch(editTodo(todo.id, null, checkStatus))
+        alert.show(`edited item ${editedTodo.itemName} to ${editedTodo.status ? "done" : "undone"}`, {
+          timeout: 2000,
+          type: 'info',
+      })
   }
-
-  const handleEditValue = async(todo) => {
+  
+  const handleEditValue = (todo) => {
       const value = prompt(`edit ${todo.itemName}`,todo.itemName)
                   
       if(value === null) return
-      await editTodo(todo.id,value, null)
-  }
 
-  const handleDelete = async(todo) => {
-      await deleteTodo(todo.id)
+      const editedTodo = dispatch(editTodo(todo.id,value, null))
+      alert.show(`edited item to ${editedTodo.itemName}`, {
+          timeout: 2000,
+          type: 'info',
+      })
+  }
+  
+  const handleDelete = (todo) => {
+      const deletedItem =  dispatch(deleteTodo(todo.id))
+      alert.show(`delete ${deletedItem.itemName}`, {
+          timeout: 2000,
+          type: 'error',
+      })
   }
   
   return (
@@ -54,13 +71,4 @@ function TodoItem({todo = {}, deleteTodo, editTodo}) {
   )
 }
 
-TodoItem.propTypes = {
-  todo: PropTypes.object.isRequired,
-  deleteTodo: PropTypes.func,
-  editTodo: PropTypes.func,
-  handleEditValue: PropTypes.func, 
-  handleDelete: PropTypes.func, 
-  handleEditCheck: PropTypes.func
-}
-
-export default memo(TodoItem)
+export default TodoItem

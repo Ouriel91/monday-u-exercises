@@ -1,15 +1,17 @@
-import {useState, memo} from 'react'
+import {useState} from 'react'
 import { useAlert } from 'react-alert'
+import {useDispatch} from 'react-redux'
+import {addTodo} from '../../../../../state-managment/actions/todo-actions'
 import styles from './TodoInput.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-import PropTypes from "prop-types";
 import Button from "../../../../UI/Button"
 
-function TodoInput({addTodo}) {
+function TodoInput() {
   
   const [textInput, setTextInput] = useState('')
   const alert = useAlert()
+  const dispatch = useDispatch()
 
   const handleAddTodo = () => {
 
@@ -21,7 +23,12 @@ function TodoInput({addTodo}) {
           return
       }
 
-      addTodo(textInput)
+      dispatch(addTodo(textInput))
+      alert.show(`Added new todo/s`, {
+          timeout: 2000,
+          type: 'success',
+      })
+
       setTextInput('')
   }
 
@@ -37,6 +44,7 @@ function TodoInput({addTodo}) {
     anotherAddedClasses += ' active'
   }
 
+  
   return (
     <div className={styles.inputContainer}>
       <input 
@@ -48,7 +56,7 @@ function TodoInput({addTodo}) {
         }}
         onKeyUp={handleAddTodoWithEnter}
         value={textInput} />
-        <Button 
+      <Button 
           content={content} 
           clickFunc={handleAddTodo} 
           anotherAddedClasses={anotherAddedClasses}/>
@@ -56,11 +64,5 @@ function TodoInput({addTodo}) {
   )
 }
 
-TodoInput.propTypes = {
-  addButton: PropTypes.func,
-  setTextInput: PropTypes.func,
-  handleAddTodo: PropTypes.func, 
-  handleAddTodoWithEnter: PropTypes.func,
-}
 
-export default memo(TodoInput)
+export default TodoInput

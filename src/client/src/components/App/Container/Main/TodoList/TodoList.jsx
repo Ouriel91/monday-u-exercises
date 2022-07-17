@@ -1,30 +1,24 @@
 import styles from './TodoList.module.css'
-import PropTypes from "prop-types";
-import EmptyTodosShow from '../EmptyTodosShow/EmptyTodosShow'
 import TodoItem from '../TodoItem/TodoItem'
+import EmptyTodosShow from '../EmptyTodosShow/EmptyTodosShow'
+import {todos} from '../../../../../state-managment/selectors/items-entities-selectors'
+import {useSelector} from "react-redux"
 
-function TodoList({todos = [], deleteTodo, editTodo}) {
+function TodoList() {
   
-  const renderItems = todos.map(todo => <TodoItem 
+  const todosArr = useSelector(todos)
+  const renderItems = todosArr.map(todo => <TodoItem 
     key={todo.id} 
-    todo={todo}
-    deleteTodo={deleteTodo}
-    editTodo={editTodo}/>)
+    todo={todo}/>
+  )
   const listWithItems = <ul className={styles.todoListContainer}>{renderItems}</ul>
-  const renderComponent = todos.length > 0 ? listWithItems : <EmptyTodosShow />
+  const renderComponent = todosArr.length > 0 ? listWithItems : <EmptyTodosShow />
   
   return (
     <>
       {renderComponent}
     </>
   )
-}
-
-TodoList.propTypes = {
-  todos: PropTypes.array.isRequired,
-  renderItems: PropTypes.array,
-  deleteTodo: PropTypes.func, 
-  editTodo: PropTypes.func
 }
 
 export default TodoList

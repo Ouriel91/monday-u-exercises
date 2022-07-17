@@ -9,40 +9,40 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Statistics() {
 
-    const [doneTodos, setDoneTodos] = useState(0)
-    const [undoneTodos, setUndoneTodos] = useState(0)
+  const [doneTodos, setDoneTodos] = useState(0)
+  const [undoneTodos, setUndoneTodos] = useState(0)
 
-    const itemClient = new ItemClient();
-    const data = {
-      labels: ['Undone','Done'],
-      datasets: [
-        {
-          label: '# of Tasks',
-          data: [undoneTodos, doneTodos],
-          backgroundColor: [
-            '#3171a8',
-            '#8d5db3',
-          ],
-          borderWidth: 1,
-        },
-      ],
-    }
+  const itemClient = new ItemClient();
+  const data = {
+    labels: ['Undone','Done'],
+    datasets: [
+      {
+        label: '# of Tasks',
+        data: [undoneTodos, doneTodos],
+        backgroundColor: [
+          '#3171a8',
+          '#8d5db3',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
 
-    const handleStatistics = async() => {
-      const items = await itemClient.getTodoList();
-      
-      let done = 0
-      items.forEach((item) => {
-          if(item.status === true) {
-              done++
-          }
-      })
-
-      setUndoneTodos(items.length - done)
-      setDoneTodos(done)
-    }
+  const handleStatistics = async() => {
+    const items = await itemClient.getTodoList();
     
-    handleStatistics()
+    let done = 0
+    items.forEach((item) => {
+        if(item.status === true) {
+            done++
+        }
+    })
+
+    setUndoneTodos(items.length - done)
+    setDoneTodos(done)
+  }
+  
+  handleStatistics()
 
     return (
         <div>

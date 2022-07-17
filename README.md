@@ -1,11 +1,11 @@
 You need to activate the server and client
 
-To server:
-Navigate to src/project and run
-```node server.js```
+To ```server```:
+1. ```cd src/server```
+2. run ```node server.js```
 or
-```nodemon server.js``` (prefer)
+run ```nodemon server.js``` (prefer)
 
-To client: 
-Navigate to src/client and run
-```npm start ```
+To ```client```: 
+1. ```cd src/client`` and run
+2. run ```npm start```

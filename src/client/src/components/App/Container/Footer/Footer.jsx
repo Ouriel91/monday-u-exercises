@@ -1,35 +1,39 @@
-import {memo} from 'react'
 import styles from './Footer.module.css'
-import PropTypes from "prop-types";
+import {useSelector, useDispatch} from 'react-redux'
+import {todosLength} from '../../../../state-managment/selectors/items-entities-selectors'
+import {deleteTodo} from '../../../../state-managment/actions/todo-actions'
+import { useAlert } from 'react-alert'
 import Button from '../../../UI/Button'
 
-function Footer({todosLength = 0, deleteTodo}) {
+function Footer() {
+  const listLength = useSelector(todosLength)
+  const dispatch = useDispatch()
+  const alert = useAlert()
 
-  const handleDeleteAll = () => {
-    deleteTodo('delete-all')
+  const handleClearAll = () => {
+    dispatch(deleteTodo('delete-all'))
+    alert.show('delete all todos', {
+        timeout: 2000,
+        type: 'error',
+    })
   }
 
   let anotherAddedClasses = ' clearAllButton'
-  if(todosLength > 0 ){
+  if(listLength > 0 ){
     anotherAddedClasses += ' active'
   }
 
   return (
     <div className={styles.bottom}>
         <span className={styles.todosCount}>
-          You have {todosLength} pending tasks
+          You have {listLength} pending tasks
         </span>
         <Button 
-          clickFunc={handleDeleteAll} 
+          clickFunc={handleClearAll} 
           content="Clear All"
           anotherAddedClasses={anotherAddedClasses}/>
     </div>
   )
 }
 
-Footer.propTypes = {
-  todosLength: PropTypes.number,
-  deleteTodo: PropTypes.func
-}
-
-export default memo(Footer)
+export default Footer

@@ -31,8 +31,8 @@ todoRouter.post("/", async(req, res) => {
     }
     
     try{
-        await itemManager.addTodo(todo)
-        return res.status(201).json(todo);
+        const addedTodo = await itemManager.addTodo(todo)
+        return res.status(201).json(addedTodo);
     }
 
     catch(err){

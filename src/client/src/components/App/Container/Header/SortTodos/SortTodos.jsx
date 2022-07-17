@@ -1,11 +1,12 @@
-import {memo} from 'react'
 import styles from './SortTodos.module.css'
-import PropTypes from "prop-types";
+import {useDispatch} from 'react-redux'
+import {getTodos} from '../../../../../state-managment/actions/todo-actions'
 
-function SortTodos({getTodos}) {
+function SortTodos() {
 
+  const dispatch = useDispatch()
   const handleSorts = (e) => {
-    getTodos(`?sort=${e.target.value}`)
+      dispatch(getTodos(`?sort=${e.target.value}`))
   }
 
   return (
@@ -19,9 +20,4 @@ function SortTodos({getTodos}) {
   )
 }
 
-SortTodos.propTypes = {
-  getTodos: PropTypes.func,
-  handleSorts: PropTypes.func,
-}
-
-export default memo(SortTodos)
+export default SortTodos

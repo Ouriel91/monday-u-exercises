@@ -1,21 +1,16 @@
 import styles from './Header.module.css';
-import FilterTodos from '../FilterTodos/FilterTodos'
-import SortTodos from '../SortTodos/SortTodos'
-import PropTypes from "prop-types";
+import FilterTodos from '../../Header/FilterTodos/FilterTodos'
+import SortTodos from '../../Header/SortTodos/SortTodos'
 import Title from '../Title/Title'
 
-function Header({getTodos}) {
+function Header() {
   return (
     <div className={styles.top}>
         <Title />
-        <FilterTodos getTodos={getTodos}/>
-        <SortTodos getTodos={getTodos}/>
+        <FilterTodos />
+        <SortTodos />
     </div>
   )
-}
-
-Header.propTypes = {
-  getTodos: PropTypes.func
 }
 
 export default Header

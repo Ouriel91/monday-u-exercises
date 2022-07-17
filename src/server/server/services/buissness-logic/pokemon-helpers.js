@@ -11,23 +11,26 @@ module.exports = async function handleAddSingleOrMultiPokemonsTodo(pokemonClient
         for(let i = 0; i < split.length; i++){
             pokemonArr.push(pokemonClient.fetchMulti(sanitize(split[i])))
         }
-        await handleAddMultiPokemonsTodo(pokemonClient, pokemonArr)
+        
+        return await handleAddMultiPokemonsTodo(pokemonClient, pokemonArr)
     }
     else {
-        await handleAddSinglePokemonTodo(pokemonClient, enterValue)
+        return await handleAddSinglePokemonTodo(pokemonClient, enterValue)
     }
 }
 
 async function handleAddMultiPokemonsTodo(pokemonClient, pokemonArr){
-
     return Promise.all(pokemonArr)
         .then(async (response) => {
+            const multipleArr = []
             for(let i = 0; i < response.length; i++){
-                await addMultiplePokemonsTodo(response[i], pokemonClient)
+                const todo = await addMultiplePokemonsTodo(response[i], pokemonClient)
+                multipleArr.push(todo)
             }
+            return multipleArr
     }).catch(async(error) => {
         console.log(error)
-        await addFailToLoadPokemonsTodo(pokemonArr)
+        return await addFailToLoadPokemonsTodo(pokemonArr)
     })
 }
 
@@ -35,12 +38,12 @@ async function addMultiplePokemonsTodo(res , pokemonClient) {
     const types = pokemonClient.getTypes(res)
     const dataRetrieved = pokemonClient.returnPokemonData(res, types)
     const {value, isPokemon, imagePokemonPath} = dataRetrieved
-    await addTodoData(value, isPokemon, imagePokemonPath)
+    return await addTodoData(value, isPokemon, imagePokemonPath)
 }
 
 async function addFailToLoadPokemonsTodo(enterValue) {
     const value = `failed to fetch pokemon with this input: ${enterValue}`
-    await addTodoData(value, false, null)
+    return await addTodoData(value, false, null)
 }
 
 async function handleAddSinglePokemonTodo(pokemonClient, enterValue){
@@ -48,10 +51,10 @@ async function handleAddSinglePokemonTodo(pokemonClient, enterValue){
     const dataRetrieved = await pokemonClient.fetchSingle(enterValue)
     if(dataRetrieved){
         const {value, isPokemon, imagePokemonPath} = dataRetrieved
-        await addTodoData(value, isPokemon, imagePokemonPath)
+        return await addTodoData(value, isPokemon, imagePokemonPath)
     }
     else {
-        await addFailToLoadPokemonsTodo(enterValue)
+        return await addFailToLoadPokemonsTodo(enterValue)
     }   
 }
 
