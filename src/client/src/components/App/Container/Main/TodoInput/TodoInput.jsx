@@ -13,7 +13,7 @@ function TodoInput() {
   const alert = useAlert()
   const dispatch = useDispatch()
 
-  const handleAddTodo = async() => {
+  const handleAddTodo = () => {
 
       if(textInput.trim() === '') {
           alert.show('Todo can not be empty', {
@@ -23,7 +23,7 @@ function TodoInput() {
           return
       }
 
-      await dispatch(addTodo(textInput))
+      dispatch(addTodo(textInput))
       alert.show(`Added new todo/s`, {
           timeout: 2000,
           type: 'success',
@@ -43,6 +43,7 @@ function TodoInput() {
   if(textInput.length > 0 ){
     anotherAddedClasses += ' active'
   }
+
   
   return (
     <div className={styles.inputContainer}>
@@ -62,5 +63,6 @@ function TodoInput() {
     </div>
   )
 }
+
 
 export default TodoInput

@@ -151,5 +151,3 @@ export const search = (value) => {
         dispatch(searchAction(value))
     }
 }
-
-

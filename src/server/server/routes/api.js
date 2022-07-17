@@ -19,6 +19,7 @@ todoRouter.get('/', async(req, res) => {
     else{
         sortedList = await itemManager.getTodoList()
     }
+
     return res.status(200).json(sortedList);
 })
 
@@ -33,6 +34,7 @@ todoRouter.post("/", async(req, res) => {
         const addedTodo = await itemManager.addTodo(todo)
         return res.status(201).json(addedTodo);
     }
+
     catch(err){
         return res.status(error.statusCode || 500).json({error: err.toString()})
     }
