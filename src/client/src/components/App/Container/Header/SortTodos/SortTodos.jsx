@@ -1,6 +1,6 @@
 import styles from './SortTodos.module.css'
 import {useDispatch} from 'react-redux'
-import {getTodos} from '../../../../../state managment/actions/todo-actions'
+import {getTodos} from '../../../../../state-managment/actions/todo-actions'
 
 function SortTodos() {
 

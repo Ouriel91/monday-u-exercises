@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {loader, errorMessage} from '../../../state managment/selectors/items-entities-selectors'
-import {getTodos} from '../../../state managment/actions/todo-actions'
+import {loader, errorMessage} from '../../../state-managment/selectors/items-entities-selectors'
+import {getTodos} from '../../../state-managment/actions/todo-actions'
 import styles from './Container.module.css';
 import Header from './Header/Header/Header'
 import Loader from './Main/Loader/Loader'

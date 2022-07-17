@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux'
-import {editTodo, deleteTodo} from '../../../../../state managment/actions/todo-actions'
+import {editTodo, deleteTodo} from '../../../../../state-managment/actions/todo-actions'
 import { useAlert } from 'react-alert'
 import styles from './TodoItem.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

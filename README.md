@@ -1,7 +1,7 @@
 You need to activate the server and client
 
 To ```server```:
-1. ```cd src/project```
+1. ```cd src/server```
 2. run ```node server.js```
 or
 run ```nodemon server.js``` (prefer)
