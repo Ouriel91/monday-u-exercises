@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import ListContainer from "../TodoList";
 import { Provider } from "react-redux";
-import { store } from "../../../../../../state managment/store";
+import { store } from "../../../../../../state-managment/store";
 import {useDispatch} from 'react-redux'
-import {addTodoAction} from '../../../../../../state managment/actions/todo-actions'
+import {addTodoAction} from '../../../../../../state-managment/actions/todo-actions'
 
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'

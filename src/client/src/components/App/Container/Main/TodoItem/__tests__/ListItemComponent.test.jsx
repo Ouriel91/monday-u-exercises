@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import TodoItem from "../TodoItem"
 import { Provider } from "react-redux";
-import { store } from "../../../../../../state managment/store";
+import { store } from "../../../../../../state-managment/store";
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 
