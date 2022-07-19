@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "tododb",
-    "host": "127.0.0.1",
+    "username": "bd3cab6a89bbd3",
+    "password": "b089f25e",
+    "database": "heroku_063b47ffd4415fb",
+    "host": "us-cdbr-east-06.cleardb.net",
     "dialect": "mysql"
   }
 }
