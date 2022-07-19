@@ -1,7 +1,7 @@
 import styles from './Footer.module.css'
 import {useSelector, useDispatch} from 'react-redux'
 import {todosLength} from '../../../../state-managment/selectors/items-entities-selectors'
-import {deleteTodo} from '../../../../state-managment/actions/todo-actions'
+import {deleteAll} from '../../../../state-managment/actions/todo-actions'
 import { useAlert } from 'react-alert'
 import Button from '../../../UI/Button'
 
@@ -11,7 +11,7 @@ function Footer() {
   const alert = useAlert()
 
   const handleClearAll = () => {
-    dispatch(deleteTodo('delete-all'))
+    dispatch(deleteAll('delete-all'))
     alert.show('delete all todos', {
         timeout: 2000,
         type: 'error',

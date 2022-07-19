@@ -86,20 +86,26 @@ export const deleteTodo = (id) => {
         try{
             const deletedTodo = await itemClient.deleteTodo(id)
             dispatch(deleteTodoAction(deletedTodo));
-            if(id === 'delete-all'){
-                dispatch(clearAllAction())
-            }
             dispatch(loaderDownAction())
             return deletedTodo
         }catch(error){
-            if(id === 'delete-all'){
-                dispatch(setErrorAction('can not clear all list, please try again later'))   
-            }
-            else{
-                dispatch(setErrorAction('can not delete item from list, please try again later'))   
-            }
+            dispatch(setErrorAction('can not delete item from list, please try again later'))   
         }
         
+    }
+}
+
+export const deleteAll = (id) => {
+    return async dispatch => {
+        dispatch(loaderUpAction())
+        try{
+            const deletedTodo = await itemClient.deleteTodo(id)
+            dispatch(clearAllAction())
+            dispatch(loaderDownAction())
+            return deletedTodo
+        }catch(error){
+            dispatch(setErrorAction('can not clear all list, please try again later'))   
+        }
     }
 }
 
