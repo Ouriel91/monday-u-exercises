@@ -1,7 +1,9 @@
-``` Production mode or just my site: ```
+``` === Production mode or just my site: ===```
+
 https://pokedolist.herokuapp.com/
 
-``` For dev mode: ```
+
+``` === For dev mode:=== ```
 
 Go to ```server``` folder:
 1. ```cd src/server```
@@ -10,6 +12,6 @@ or
 run ```nodemon server.js``` (prefer)
 
 Then go ```client```: 
-1. ```cd src/client`` and run
+1. ```cd src/client``` and run
 2. run ```npm start```
 
