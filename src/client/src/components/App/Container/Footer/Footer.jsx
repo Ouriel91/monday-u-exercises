@@ -1,21 +1,17 @@
 import styles from './Footer.module.css'
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {todosLength} from '../../../../state-managment/selectors/items-entities-selectors'
 import {deleteAll} from '../../../../state-managment/actions/todo-actions'
-import { useAlert } from 'react-alert'
 import Button from '../../../UI/Button'
+import useUtils from '../../../../utils/useUtils'
 
 function Footer() {
   const listLength = useSelector(todosLength)
-  const dispatch = useDispatch()
-  const alert = useAlert()
+  const {getDispatch, getAlert} = useUtils()
 
-  const handleClearAll = () => {
-    dispatch(deleteAll('delete-all'))
-    alert.show('delete all todos', {
-        timeout: 2000,
-        type: 'error',
-    })
+  const handleClearAll = async() => {
+    await getDispatch(deleteAll('delete-all'))
+    getAlert('delete all todos', 2000, 'error')
   }
 
   let anotherAddedClasses = ' clearAllButton'

@@ -1,26 +1,23 @@
 import styles from './Filter.module.css'
-import {useDispatch} from 'react-redux'
 import {getTodos} from '../../../../../state-managment/actions/todo-actions'
-import { useAlert } from 'react-alert'
+import useUtils from '../../../../../utils/useUtils'
 
 function FilterTodos() {
   
-  const dispatch = useDispatch()
-  const alert = useAlert()
+  const {getDispatch, getAlert} = useUtils()
 
-  const handleDoneUndone = (e) => {
+  const handleDoneUndone = async(e) => {
       try{
+          let status 
           if(e.target.checked){
-              dispatch(getTodos(`?filter=checked`))
+            status = 'checked'
           }
           else{
-              dispatch(getTodos(`?filter=unchecked`))
+            status = 'unchecked'
           }
+          await getDispatch(getTodos(`?filter=${status}`))
       }catch(e){
-          alert.show(e.message, {
-              timeout: 2000,
-              type: 'error',
-          })
+          getAlert(e.message, 2000, 'error')
       }   
   }
 

@@ -1,7 +1,8 @@
 import {useEffect} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {loader, errorMessage} from '../../../state-managment/selectors/items-entities-selectors'
 import {getTodos} from '../../../state-managment/actions/todo-actions'
+import useUtils from '../../../utils/useUtils'
 import styles from './Container.module.css';
 import Header from './Header/Header/Header'
 import Loader from './Main/Loader/Loader'
@@ -15,13 +16,13 @@ function Container() {
 
     const isLoading = useSelector(loader)
     const error = useSelector(errorMessage)
-    const dispatch = useDispatch()
+    const {getDispatch} = useUtils()
 
     let count = 0;
     useEffect(() => {
         //prevent from use effect run twice (react 18+)
         if(count < 1){
-            dispatch(getTodos())
+            getDispatch(getTodos())
         }
         count++;
     },[]) // eslint-disable-line 

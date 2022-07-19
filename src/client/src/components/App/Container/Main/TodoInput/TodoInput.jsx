@@ -1,6 +1,5 @@
 import {useState} from 'react'
-import { useAlert } from 'react-alert'
-import {useDispatch} from 'react-redux'
+import useUtils from '../../../../../utils/useUtils'
 import {addTodo} from '../../../../../state-managment/actions/todo-actions'
 import styles from './TodoInput.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,24 +9,17 @@ import Button from "../../../../UI/Button"
 function TodoInput() {
   
   const [textInput, setTextInput] = useState('')
-  const alert = useAlert()
-  const dispatch = useDispatch()
+  const {getDispatch, getAlert} = useUtils()
 
-  const handleAddTodo = () => {
+  const handleAddTodo = async() => {
 
       if(textInput.trim() === '') {
-          alert.show('Todo can not be empty', {
-              timeout: 2000,
-              type: 'error',
-          })
+          getAlert('Todo can not be empty', 2000, 'error')
           return
       }
 
-      dispatch(addTodo(textInput))
-      alert.show(`Added new todo/s`, {
-          timeout: 2000,
-          type: 'success',
-      })
+      await getDispatch(addTodo(textInput))
+      getAlert('Added new todo/s', 2000, 'success')
 
       setTextInput('')
   }

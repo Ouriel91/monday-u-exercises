@@ -1,16 +1,16 @@
 import styles from './Search.module.css'
 import {search} from '../../../../../state-managment/actions/todo-actions'
 import {searchValue} from '../../../../../state-managment/selectors/items-entities-selectors'
-import {useSelector, useDispatch} from "react-redux"
+import {useSelector} from "react-redux"
+import useUtils from '../../../../../utils/useUtils'
 
 function Search() {
 
-    const dispatch = useDispatch()
+    const {getDispatch} = useUtils()
     const inputValue = useSelector(searchValue)
 
     const filterTodos = (e) => {
-        const input = e.target.value
-        dispatch(search(input))
+        getDispatch(search(e.target.value))
     }
     
     return (

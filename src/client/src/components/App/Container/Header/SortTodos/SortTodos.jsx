@@ -1,12 +1,12 @@
 import styles from './SortTodos.module.css'
-import {useDispatch} from 'react-redux'
+import useUtils from '../../../../../utils/useUtils'
 import {getTodos} from '../../../../../state-managment/actions/todo-actions'
 
 function SortTodos() {
 
-  const dispatch = useDispatch()
-  const handleSorts = (e) => {
-      dispatch(getTodos(`?sort=${e.target.value}`))
+  const {getDispatch} = useUtils()
+  const handleSorts = async(e) => {
+      await getDispatch(getTodos(`?sort=${e.target.value}`))
   }
 
   return (
