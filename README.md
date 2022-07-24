@@ -2,8 +2,6 @@
 
 https://pokedolist.herokuapp.com/
 
-``` make sure that server is up (see below) ```
-
 
 ``` === For dev mode:=== ```
 
