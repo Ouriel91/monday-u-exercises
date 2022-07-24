@@ -22,6 +22,7 @@ describe("simulate list test - adding, deleting, editing checking, sorting and f
   it('add single todo - regular todo', () => {
     cy.get('.TodoInput_todoInput__Fi6zP').type('buy milk')
     cy.get('.addButton').click()
+    cy.wait(500)
     cy.get('.TodoList_todoListContainer__6tM1I').should('be.visible') //just for the first time
     cy.get('.TodoItem_todoTitle__iloo0').eq(0).should('contain.text', 'buy milk')
     cy.get('.Footer_todosCount__HZrEC').contains('You have 1 pending tasks')
